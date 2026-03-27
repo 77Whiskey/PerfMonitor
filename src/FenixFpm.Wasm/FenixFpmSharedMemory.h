@@ -3,13 +3,15 @@
 #include <cstddef>
 #include <cstdint>
 
-namespace fenixfpm::wasm
+namespace fenixfpm
 {
-inline constexpr char ClientDataName[] = "FENIX_FPM_DATA";
-inline constexpr std::uint32_t BufferVersion = 1U;
-inline constexpr std::uint32_t ClientDataAreaId = 0x1100U;
-inline constexpr std::uint32_t ClientDataDefinitionId = 0x1100U;
-inline constexpr std::uint32_t FrameEventId = 0x1100U;
+namespace wasm
+{
+constexpr char ClientDataName[] = "FENIX_FPM_DATA";
+constexpr std::uint32_t BufferVersion = 1U;
+constexpr std::uint32_t ClientDataAreaId = 0x1100U;
+constexpr std::uint32_t ClientDataDefinitionId = 0x1100U;
+constexpr std::uint32_t FrameEventId = 0x1100U;
 
 enum class FmaLateralMode : std::uint16_t
 {
@@ -175,4 +177,5 @@ static_assert(sizeof(BufferHeader) == 32U, "BufferHeader size must match the man
 static_assert(sizeof(FenixSystemsData) == 16U, "FenixSystemsData size must match the managed contract.");
 static_assert(sizeof(FenixFpmSharedBuffer) == 298U, "FenixFpmSharedBuffer size must match the managed contract.");
 static_assert(offsetof(FenixFpmSharedBuffer, Flight) == sizeof(BufferHeader), "Flight snapshot offset must remain stable.");
-} // namespace fenixfpm::wasm
+} // namespace wasm
+} // namespace fenixfpm

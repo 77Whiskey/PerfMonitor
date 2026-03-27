@@ -5,7 +5,6 @@
 
 #include <MSFS/MSFS.h>
 
-#include <algorithm>
 #include <chrono>
 #include <cmath>
 #include <cstdint>
@@ -51,10 +50,10 @@ struct GaugesImportTable
 
 constexpr std::uint32_t GaugeModuleId = 0x00000013U;
 constexpr std::uint32_t PanelsApiImportId = 0x0000000FU;
-constexpr auto ReconnectDelay = std::chrono::seconds(5);
+constexpr std::chrono::seconds ReconnectDelay(5);
 constexpr double PoundsToKilograms = 0.45359237;
 
-HANDLE g_hSimConnect = nullptr;
+HANDLE g_hSimConnect = 0;
 bool g_clientDataReady = false;
 std::uint64_t g_sequence = 0;
 std::chrono::steady_clock::time_point g_lastConnectAttempt = std::chrono::steady_clock::time_point::min();
@@ -68,22 +67,44 @@ std::uint8_t ToByte(bool value)
     return value ? 1U : 0U;
 }
 
-double ClampFinite(double value, double fallback = 0.0)
+double ClampFinite(double value, double fallback)
 {
     return std::isfinite(value) ? value : fallback;
 }
 
+std::uint32_t NormalizeSampleRate(float frameRate)
+{
+    long roundedRate = 60;
+
+    if (frameRate > 0.0F)
+    {
+        roundedRate = static_cast<long>(std::lround(frameRate));
+    }
+
+    if (roundedRate < 1)
+    {
+        roundedRate = 1;
+    }
+    else if (roundedRate > 240)
+    {
+        roundedRate = 240;
+    }
+
+    return static_cast<std::uint32_t>(roundedRate);
+}
+
 std::int64_t GetUnixMicroseconds()
 {
-    const auto now = std::chrono::time_point_cast<std::chrono::microseconds>(std::chrono::system_clock::now());
+    const std::chrono::time_point<std::chrono::system_clock, std::chrono::microseconds> now =
+        std::chrono::time_point_cast<std::chrono::microseconds>(std::chrono::system_clock::now());
     return static_cast<std::int64_t>(now.time_since_epoch().count());
 }
 
 std::uint32_t ComputeChecksum(const FenixFpmSharedBuffer& buffer)
 {
     std::uint32_t checksum = 2166136261U;
-    const auto* bytes = reinterpret_cast<const std::uint8_t*>(&buffer);
-    const auto length = sizeof(FenixFpmSharedBuffer) - sizeof(buffer.Checksum);
+    const std::uint8_t* bytes = reinterpret_cast<const std::uint8_t*>(&buffer);
+    const std::size_t length = sizeof(FenixFpmSharedBuffer) - sizeof(buffer.Checksum);
 
     for (std::size_t index = 0; index < length; ++index)
     {
@@ -94,36 +115,35 @@ std::uint32_t ComputeChecksum(const FenixFpmSharedBuffer& buffer)
     return checksum;
 }
 
-double ReadLVar(const char* variableName, double fallback = 0.0)
+double ReadLVar(const char* variableName, double fallback)
 {
-    auto [iterator, inserted] = g_namedVariableCache.try_emplace(variableName, 0);
-    if (inserted || iterator->second == 0)
+    ID& variableId = g_namedVariableCache[variableName];
+
+    if (variableId == 0)
     {
-        ID variableId = check_named_variable(variableName);
+        variableId = check_named_variable(variableName);
         if (variableId == 0)
         {
             variableId = register_named_variable(variableName);
         }
-
-        iterator->second = variableId;
     }
 
-    if (iterator->second == 0)
+    if (variableId == 0)
     {
         return fallback;
     }
 
-    return ClampFinite(get_named_variable_value(iterator->second), fallback);
+    return ClampFinite(get_named_variable_value(variableId), fallback);
 }
 
 bool ReadLVarBool(const char* variableName)
 {
-    return std::fabs(ReadLVar(variableName)) >= 0.5;
+    return std::fabs(ReadLVar(variableName, 0.0)) >= 0.5;
 }
 
-double ReadSimVar(const char* simVarName, const char* units, int index = -1, double fallback = 0.0)
+double ReadSimVar(const char* simVarName, const char* units, int index, double fallback)
 {
-    char expression[256]{};
+    char expression[256] = {};
     if (index > 0)
     {
         std::snprintf(expression, sizeof(expression), "(A:%s:%d, %s)", simVarName, index, units);
@@ -135,7 +155,7 @@ double ReadSimVar(const char* simVarName, const char* units, int index = -1, dou
 
     FLOAT64 floatingValue = fallback;
     SINT32 integerValue = 0;
-    PCSTRINGZ stringValue = nullptr;
+    PCSTRINGZ stringValue = 0;
 
     if (!execute_calculator_code(expression, &floatingValue, &integerValue, &stringValue))
     {
@@ -145,9 +165,9 @@ double ReadSimVar(const char* simVarName, const char* units, int index = -1, dou
     return ClampFinite(static_cast<double>(floatingValue), fallback);
 }
 
-bool ReadSimBool(const char* simVarName, const char* units = "Bool", int index = -1)
+bool ReadSimBool(const char* simVarName, const char* units, int index)
 {
-    return std::fabs(ReadSimVar(simVarName, units, index)) >= 0.5;
+    return std::fabs(ReadSimVar(simVarName, units, index, 0.0)) >= 0.5;
 }
 
 AutobrakeMode DetermineAutobrakeMode()
@@ -288,10 +308,10 @@ FmaVerticalMode DetermineVerticalMode(
 
 void PopulateSnapshot(FenixFpmSharedBuffer& buffer)
 {
-    const bool onGround = ReadSimBool("SIM ON GROUND");
-    const bool localizerCaptured = ReadSimBool("AUTOPILOT NAV1 LOCK");
-    const bool glideslopeCaptured = ReadSimBool("AUTOPILOT GLIDESLOPE HOLD");
-    const bool approachModeActive = ReadLVarBool("S_FCU_APPR") || ReadSimBool("AUTOPILOT APPROACH HOLD");
+    const bool onGround = ReadSimBool("SIM ON GROUND", "Bool", -1);
+    const bool localizerCaptured = ReadSimBool("AUTOPILOT NAV1 LOCK", "Bool", -1);
+    const bool glideslopeCaptured = ReadSimBool("AUTOPILOT GLIDESLOPE HOLD", "Bool", -1);
+    const bool approachModeActive = ReadLVarBool("S_FCU_APPR") || ReadSimBool("AUTOPILOT APPROACH HOLD", "Bool", -1);
     const bool headingManaged = ReadLVarBool("S_FCU_HEADING");
     const bool speedManaged = ReadLVarBool("S_FCU_SPEED");
     const bool altitudeManaged = ReadLVarBool("S_FCU_ALTITUDE");
@@ -302,50 +322,50 @@ void PopulateSnapshot(FenixFpmSharedBuffer& buffer)
     const bool gear3Down = ReadLVarBool("I_MIP_GEAR_3_U");
     const bool gearDownLocked = gear1Down && gear2Down && gear3Down;
 
-    const double flapsHandleIndex = ReadLVar("S_FC_FLAPS");
-    const double spoilersHandle = ReadLVar("A_FC_SPEEDBRAKE");
-    const double radioAltitudeFeet = ReadSimVar("RADIO HEIGHT", "Feet");
-    const double verticalSpeedFpm = ReadSimVar("VERTICAL SPEED", "Feet per minute");
-    const double indicatedAirspeedKnots = ReadSimVar("AIRSPEED INDICATED", "Knots");
-    const double trueAirspeedKnots = ReadSimVar("AIRSPEED TRUE", "Knots");
-    const double groundSpeedKnots = ReadSimVar("GPS GROUND SPEED", "Knots");
-    const double baroAltitudeFeet = ReadSimVar("INDICATED ALTITUDE", "Feet");
-    const double grossWeightKg = ReadSimVar("TOTAL WEIGHT", "Kilograms");
-    const double outsideAirTemperatureC = ReadSimVar("AMBIENT TEMPERATURE", "Celsius");
-    const double pressureAltitudeFeet = ReadSimVar("PRESSURE ALTITUDE", "Feet");
-    const double pitchDegrees = ReadSimVar("PLANE PITCH DEGREES", "Degrees");
-    const double bankDegrees = ReadSimVar("PLANE BANK DEGREES", "Degrees");
-    const double leftN1Percent = ReadSimVar("GENERAL ENG N1", "Percent", 1);
-    const double rightN1Percent = ReadSimVar("GENERAL ENG N1", "Percent", 2);
-    const double leftEgtCelsius = ReadSimVar("GENERAL ENG EXHAUST GAS TEMPERATURE", "Celsius", 1);
-    const double rightEgtCelsius = ReadSimVar("GENERAL ENG EXHAUST GAS TEMPERATURE", "Celsius", 2);
-    const double leftFuelFlowKgPerHour = ReadSimVar("TURB ENG FUEL FLOW PPH", "Pounds per hour", 1) * PoundsToKilograms;
-    const double rightFuelFlowKgPerHour = ReadSimVar("TURB ENG FUEL FLOW PPH", "Pounds per hour", 2) * PoundsToKilograms;
-    const double thrustLever1Degrees = ReadLVar("A_FC_THROTTLE_LEFT_INPUT");
-    const double thrustLever2Degrees = ReadLVar("A_FC_THROTTLE_RIGHT_INPUT");
-    const double sideStickPitch = ReadLVar("N_FC_SIDESTICK_CAPT_PITCH");
-    const double sideStickRoll = ReadLVar("N_FC_SIDESTICK_CAPT_BANK");
-    const double rudderPercent = ReadLVar("N_FC_RUDDER");
-    const double elevatorPercent = ReadSimVar("ELEVATOR DEFLECTION PCT", "Percent");
-    const double aileronPercent = ReadSimVar("AILERON LEFT DEFLECTION PCT", "Percent");
+    const double flapsHandleIndex = ReadLVar("S_FC_FLAPS", 0.0);
+    const double spoilersHandle = ReadLVar("A_FC_SPEEDBRAKE", 0.0);
+    const double radioAltitudeFeet = ReadSimVar("RADIO HEIGHT", "Feet", -1, 0.0);
+    const double verticalSpeedFpm = ReadSimVar("VERTICAL SPEED", "Feet per minute", -1, 0.0);
+    const double indicatedAirspeedKnots = ReadSimVar("AIRSPEED INDICATED", "Knots", -1, 0.0);
+    const double trueAirspeedKnots = ReadSimVar("AIRSPEED TRUE", "Knots", -1, 0.0);
+    const double groundSpeedKnots = ReadSimVar("GPS GROUND SPEED", "Knots", -1, 0.0);
+    const double baroAltitudeFeet = ReadSimVar("INDICATED ALTITUDE", "Feet", -1, 0.0);
+    const double grossWeightKg = ReadSimVar("TOTAL WEIGHT", "Kilograms", -1, 0.0);
+    const double outsideAirTemperatureC = ReadSimVar("AMBIENT TEMPERATURE", "Celsius", -1, 0.0);
+    const double pressureAltitudeFeet = ReadSimVar("PRESSURE ALTITUDE", "Feet", -1, 0.0);
+    const double pitchDegrees = ReadSimVar("PLANE PITCH DEGREES", "Degrees", -1, 0.0);
+    const double bankDegrees = ReadSimVar("PLANE BANK DEGREES", "Degrees", -1, 0.0);
+    const double leftN1Percent = ReadSimVar("GENERAL ENG N1", "Percent", 1, 0.0);
+    const double rightN1Percent = ReadSimVar("GENERAL ENG N1", "Percent", 2, 0.0);
+    const double leftEgtCelsius = ReadSimVar("GENERAL ENG EXHAUST GAS TEMPERATURE", "Celsius", 1, 0.0);
+    const double rightEgtCelsius = ReadSimVar("GENERAL ENG EXHAUST GAS TEMPERATURE", "Celsius", 2, 0.0);
+    const double leftFuelFlowKgPerHour = ReadSimVar("TURB ENG FUEL FLOW PPH", "Pounds per hour", 1, 0.0) * PoundsToKilograms;
+    const double rightFuelFlowKgPerHour = ReadSimVar("TURB ENG FUEL FLOW PPH", "Pounds per hour", 2, 0.0) * PoundsToKilograms;
+    const double thrustLever1Degrees = ReadLVar("A_FC_THROTTLE_LEFT_INPUT", 0.0);
+    const double thrustLever2Degrees = ReadLVar("A_FC_THROTTLE_RIGHT_INPUT", 0.0);
+    const double sideStickPitch = ReadLVar("N_FC_SIDESTICK_CAPT_PITCH", 0.0);
+    const double sideStickRoll = ReadLVar("N_FC_SIDESTICK_CAPT_BANK", 0.0);
+    const double rudderPercent = ReadLVar("N_FC_RUDDER", 0.0);
+    const double elevatorPercent = ReadSimVar("ELEVATOR DEFLECTION PCT", "Percent", -1, 0.0);
+    const double aileronPercent = ReadSimVar("AILERON LEFT DEFLECTION PCT", "Percent", -1, 0.0);
     const double vappKnots = ReadLVar("E_FCU_SPEED", indicatedAirspeedKnots);
-    const auto autobrakeMode = DetermineAutobrakeMode();
-    const auto landingConfiguration = DetermineLandingConfiguration(flapsHandleIndex, gearDownLocked);
+    const AutobrakeMode autobrakeMode = DetermineAutobrakeMode();
+    const LandingConfigurationCode landingConfiguration = DetermineLandingConfiguration(flapsHandleIndex, gearDownLocked);
     const bool spoilersArmed = spoilersHandle > 0.05;
     const bool landModeArmed = approachModeActive && localizerCaptured && glideslopeCaptured && radioAltitudeFeet <= 300.0;
     const bool flareModeArmed = landModeArmed && radioAltitudeFeet <= 100.0;
-    const auto approachCapability = DetermineApproachCapability(
+    const ApproachCapability approachCapability = DetermineApproachCapability(
         approachModeActive,
         localizerCaptured,
         glideslopeCaptured,
         radioAltitudeFeet);
-    const auto lateralMode = DetermineLateralMode(
+    const FmaLateralMode lateralMode = DetermineLateralMode(
         headingManaged,
         localizerCaptured,
         approachModeActive,
-        ReadSimBool("AUTOPILOT NAV1 LOCK"),
+        ReadSimBool("AUTOPILOT NAV1 LOCK", "Bool", -1),
         onGround);
-    const auto verticalMode = DetermineVerticalMode(
+    const FmaVerticalMode verticalMode = DetermineVerticalMode(
         verticalManaged,
         glideslopeCaptured,
         landModeArmed,
@@ -423,19 +443,17 @@ void PopulateSnapshot(FenixFpmSharedBuffer& buffer)
 
 void PublishBuffer(float frameRate)
 {
-    if (g_hSimConnect == nullptr || !g_clientDataReady)
+    if (g_hSimConnect == 0 || !g_clientDataReady)
     {
         return;
     }
 
-    FenixFpmSharedBuffer buffer{};
+    FenixFpmSharedBuffer buffer = {};
     buffer.Header.Version = BufferVersion;
     buffer.Header.SizeBytes = static_cast<std::uint32_t>(sizeof(FenixFpmSharedBuffer));
     buffer.Header.Sequence = ++g_sequence;
     buffer.Header.TimestampUnixMicroseconds = GetUnixMicroseconds();
-    buffer.Header.SampleRateHz = frameRate > 0.0F
-        ? static_cast<std::uint32_t>(std::clamp<std::int32_t>(static_cast<std::int32_t>(std::lround(frameRate)), 1, 240))
-        : 60U;
+    buffer.Header.SampleRateHz = NormalizeSampleRate(frameRate);
     buffer.Header.Flags = 0U;
 
     PopulateSnapshot(buffer);
@@ -453,7 +471,7 @@ void PublishBuffer(float frameRate)
     if (FAILED(setDataHr))
     {
         SimConnect_Close(g_hSimConnect);
-        g_hSimConnect = nullptr;
+        g_hSimConnect = 0;
         g_clientDataReady = false;
     }
 }
@@ -463,7 +481,7 @@ void CALLBACK MyDispatchProc(SIMCONNECT_RECV* recvData, DWORD recvSize, void* co
     (void)recvSize;
     (void)context;
 
-    if (recvData == nullptr)
+    if (recvData == 0)
     {
         return;
     }
@@ -472,7 +490,7 @@ void CALLBACK MyDispatchProc(SIMCONNECT_RECV* recvData, DWORD recvSize, void* co
     {
     case SIMCONNECT_RECV_ID_EVENT_FRAME:
     {
-        auto* frameEvent = reinterpret_cast<SIMCONNECT_RECV_EVENT_FRAME*>(recvData);
+        SIMCONNECT_RECV_EVENT_FRAME* frameEvent = reinterpret_cast<SIMCONNECT_RECV_EVENT_FRAME*>(recvData);
         if (frameEvent->uEventID == FrameEventId)
         {
             PublishBuffer(frameEvent->fFrameRate);
@@ -481,19 +499,19 @@ void CALLBACK MyDispatchProc(SIMCONNECT_RECV* recvData, DWORD recvSize, void* co
     }
 
     case SIMCONNECT_RECV_ID_EXCEPTION:
-        if (g_hSimConnect != nullptr)
+        if (g_hSimConnect != 0)
         {
             SimConnect_Close(g_hSimConnect);
-            g_hSimConnect = nullptr;
+            g_hSimConnect = 0;
         }
         g_clientDataReady = false;
         break;
 
     case SIMCONNECT_RECV_ID_QUIT:
-        if (g_hSimConnect != nullptr)
+        if (g_hSimConnect != 0)
         {
             SimConnect_Close(g_hSimConnect);
-            g_hSimConnect = nullptr;
+            g_hSimConnect = 0;
         }
         g_clientDataReady = false;
         break;
@@ -505,28 +523,28 @@ void CALLBACK MyDispatchProc(SIMCONNECT_RECV* recvData, DWORD recvSize, void* co
 
 void PumpDispatch()
 {
-    if (g_hSimConnect == nullptr)
+    if (g_hSimConnect == 0)
     {
         return;
     }
 
-    const HRESULT dispatchHr = SimConnect_CallDispatch(g_hSimConnect, MyDispatchProc, nullptr);
+    const HRESULT dispatchHr = SimConnect_CallDispatch(g_hSimConnect, MyDispatchProc, 0);
     if (FAILED(dispatchHr))
     {
         SimConnect_Close(g_hSimConnect);
-        g_hSimConnect = nullptr;
+        g_hSimConnect = 0;
         g_clientDataReady = false;
     }
 }
 
 void TryInitializeSimConnect(bool force)
 {
-    if (g_hSimConnect != nullptr)
+    if (g_hSimConnect != 0)
     {
         return;
     }
 
-    const auto now = std::chrono::steady_clock::now();
+    const std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
     if (!force && g_lastConnectAttempt != std::chrono::steady_clock::time_point::min() &&
         now - g_lastConnectAttempt < ReconnectDelay)
     {
@@ -535,8 +553,8 @@ void TryInitializeSimConnect(bool force)
 
     g_lastConnectAttempt = now;
 
-    HANDLE simConnect = nullptr;
-    const HRESULT openHr = SimConnect_Open(&simConnect, "FenixFpmWasm", nullptr, 0, 0, 0);
+    HANDLE simConnect = 0;
+    const HRESULT openHr = SimConnect_Open(&simConnect, "FenixFpmWasm", 0, 0, 0, 0);
     if (FAILED(openHr))
     {
         return;
@@ -617,10 +635,10 @@ void FSAPI KillGauge()
 
 GAUGEHDR CreateGaugeHeader()
 {
-    GAUGEHDR gaugeHeader{};
+    GAUGEHDR gaugeHeader = {};
     gaugeHeader.gauge_header_version = GAUGE_HEADER_VERSION_FS1000;
     gaugeHeader.gauge_name = kGaugeName;
-    gaugeHeader.elements_list = nullptr;
+    gaugeHeader.elements_list = 0;
     gaugeHeader.query_routine = QueryGauge;
     gaugeHeader.install_routine = InstallGauge;
     gaugeHeader.initialize_routine = InitializeGauge;
@@ -630,9 +648,9 @@ GAUGEHDR CreateGaugeHeader()
     gaugeHeader.kill_routine = KillGauge;
     gaugeHeader.size_x_mm = 1U;
     gaugeHeader.size_y_mm = 1U;
-    gaugeHeader.gauge_callback = nullptr;
+    gaugeHeader.gauge_callback = 0;
     gaugeHeader.user_data = 0U;
-    gaugeHeader.parameters = nullptr;
+    gaugeHeader.parameters = 0;
     gaugeHeader.usage = kGaugeUsage;
     gaugeHeader.key_id = 0U;
     return gaugeHeader;
@@ -643,8 +661,8 @@ GAUGEHDR g_gaugeHeader = CreateGaugeHeader();
 
 extern "C" DECLSPEC_EXPORT GaugesImportTable ImportTable =
 {
-    { PanelsApiImportId, nullptr },
-    { 0x00000000, nullptr }
+    { PanelsApiImportId, 0 },
+    { 0x00000000, 0 }
 };
 
 extern "C" void FSAPI module_init(void)
@@ -654,10 +672,10 @@ extern "C" void FSAPI module_init(void)
 
 extern "C" void FSAPI module_deinit(void)
 {
-    if (g_hSimConnect != nullptr)
+    if (g_hSimConnect != 0)
     {
         SimConnect_Close(g_hSimConnect);
-        g_hSimConnect = nullptr;
+        g_hSimConnect = 0;
     }
 
     g_clientDataReady = false;
@@ -681,5 +699,5 @@ extern "C" DECLSPEC_EXPORT GAUGESLINKAGE Linkage =
     0,
     0,
     FS9LINK_VERSION,
-    { &g_gaugeHeader, nullptr }
+    { &g_gaugeHeader, 0 }
 };

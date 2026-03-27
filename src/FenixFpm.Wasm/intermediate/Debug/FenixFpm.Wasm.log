@@ -201,47 +201,28 @@ F:\MSFS 2024 SDK\WASM\include\MSFS/Legacy/gauges.h(5306,4): message : 'element_l
   In file included from FenixWasmModule.cpp:3:
 F:\MSFS 2024 SDK\SimConnect SDK\include\SimConnect.h(913,15): warning : '__stdcall' calling convention is not supported for this target [-Wignored-attributes]
 F:\MSFS 2024 SDK\WASM\include\MSFS/Legacy/..\MSFS_WindowsTypes.h(129,21): message : expanded from macro 'CALLBACK'
-  In file included from FenixWasmModule.cpp:4:
-F:\Codex\FSim\PerfMonitor\src\FenixFpm.Wasm/FenixFpmSharedMemory.h(6,19): warning : nested namespace definition is a C++17 extension; define each namespace separately [-Wc++17-extensions]
-F:\Codex\FSim\PerfMonitor\src\FenixFpm.Wasm/FenixFpmSharedMemory.h(8,1): warning : inline variables are a C++17 extension [-Wc++17-extensions]
-F:\Codex\FSim\PerfMonitor\src\FenixFpm.Wasm/FenixFpmSharedMemory.h(9,1): warning : inline variables are a C++17 extension [-Wc++17-extensions]
-F:\Codex\FSim\PerfMonitor\src\FenixFpm.Wasm/FenixFpmSharedMemory.h(10,1): warning : inline variables are a C++17 extension [-Wc++17-extensions]
-F:\Codex\FSim\PerfMonitor\src\FenixFpm.Wasm/FenixFpmSharedMemory.h(11,1): warning : inline variables are a C++17 extension [-Wc++17-extensions]
-F:\Codex\FSim\PerfMonitor\src\FenixFpm.Wasm/FenixFpmSharedMemory.h(12,1): warning : inline variables are a C++17 extension [-Wc++17-extensions]
-FenixWasmModule.cpp(57,8): error : cannot initialize a variable of type 'HANDLE' (aka 'unsigned long long') with an rvalue of type 'std::nullptr_t'
-FenixWasmModule.cpp(60,105): error : too few arguments provided to function-like macro invocation
+FenixWasmModule.cpp(59,105): error : too few arguments provided to function-like macro invocation
 F:\MSFS 2024 SDK\WASM\include\MSFS/Legacy/..\MSFS_WindowsTypes.h(298,9): message : macro 'min' defined here
-FenixWasmModule.cpp(60,39): error : no viable conversion from 'std::chrono::time_point<std::chrono::steady_clock, std::chrono::duration<long long, std::ratio<1, 1000000000>>> () noexcept' to 'std::chrono::steady_clock::time_point' (aka 'time_point<std::chrono::steady_clock, duration<long long, ratio<1LL, 1000000000LL>>>')
+FenixWasmModule.cpp(59,39): error : no viable conversion from 'std::chrono::time_point<std::chrono::steady_clock, std::chrono::duration<long long, std::ratio<1, 1000000000>>> () noexcept' to 'std::chrono::steady_clock::time_point' (aka 'time_point<std::chrono::steady_clock, duration<long long, ratio<1LL, 1000000000LL>>>')
 F:\MSFS 2024 SDK\WASM\wasi-sysroot/include/c++/v1\chrono(1356,28): message : candidate constructor (the implicit copy constructor) not viable: no known conversion from 'std::chrono::time_point<std::chrono::steady_clock, std::chrono::duration<long long, std::ratio<1, 1000000000>>> () noexcept' to 'const std::chrono::time_point<std::chrono::steady_clock, std::chrono::duration<long long, std::ratio<1, 1000000000>>> &' for 1st argument
 F:\MSFS 2024 SDK\WASM\wasi-sysroot/include/c++/v1\chrono(1356,28): message : candidate constructor (the implicit move constructor) not viable: no known conversion from 'std::chrono::time_point<std::chrono::steady_clock, std::chrono::duration<long long, std::ratio<1, 1000000000>>> () noexcept' to 'std::chrono::time_point<std::chrono::steady_clock, std::chrono::duration<long long, std::ratio<1, 1000000000>>> &&' for 1st argument
 F:\MSFS 2024 SDK\WASM\wasi-sysroot/include/c++/v1\chrono(1375,5): message : candidate template ignored: could not match 'time_point<std::chrono::time_point<std::chrono::steady_clock, std::chrono::duration<long long, std::ratio<1, 1000000000>>>::clock, _Duration2>' (aka 'time_point<std::chrono::steady_clock, _Duration2>') against 'std::chrono::time_point<std::chrono::steady_clock, std::chrono::duration<long long, std::ratio<1, 1000000000>>> () noexcept'
 F:\MSFS 2024 SDK\WASM\wasi-sysroot/include/c++/v1\chrono(1370,70): message : explicit constructor is not a candidate
-FenixWasmModule.cpp(99,10): warning : decomposition declarations are a C++17 extension [-Wc++17-extensions]
-FenixWasmModule.cpp(99,54): error : no member named 'try_emplace' in 'std::unordered_map<std::string, int>'
-FenixWasmModule.cpp(102,25): warning : 'check_named_variable' is deprecated: Use MSFS_Event.h and MSFS_Vars.h instead [-Wdeprecated-declarations]
+FenixWasmModule.cpp(124,22): warning : 'check_named_variable' is deprecated: Use MSFS_Event.h and MSFS_Vars.h instead [-Wdeprecated-declarations]
 F:\MSFS 2024 SDK\WASM\include\MSFS/Legacy/gauges.h(5360,4): message : 'check_named_variable' has been explicitly marked deprecated here
-FenixWasmModule.cpp(105,26): warning : 'register_named_variable' is deprecated: Use MSFS_Event.h and MSFS_Vars.h instead [-Wdeprecated-declarations]
+FenixWasmModule.cpp(127,26): warning : 'register_named_variable' is deprecated: Use MSFS_Event.h and MSFS_Vars.h instead [-Wdeprecated-declarations]
 F:\MSFS 2024 SDK\WASM\include\MSFS/Legacy/gauges.h(5363,4): message : 'register_named_variable' has been explicitly marked deprecated here
-FenixWasmModule.cpp(140,10): warning : 'execute_calculator_code' is deprecated: Panels API is now deprecated [-Wdeprecated-declarations]
+FenixWasmModule.cpp(136,24): warning : 'get_named_variable_value' is deprecated: Use MSFS_Event.h and MSFS_Vars.h instead [-Wdeprecated-declarations]
+F:\MSFS 2024 SDK\WASM\include\MSFS/Legacy/gauges.h(5366,4): message : 'get_named_variable_value' has been explicitly marked deprecated here
+FenixWasmModule.cpp(160,10): warning : 'execute_calculator_code' is deprecated: Panels API is now deprecated [-Wdeprecated-declarations]
 F:\MSFS 2024 SDK\WASM\include\MSFS/Legacy/gauges.h(5399,4): message : 'execute_calculator_code' has been explicitly marked deprecated here
-FenixWasmModule.cpp(426,23): error : invalid operands to binary expression ('HANDLE' (aka 'unsigned long long') and 'std::nullptr_t')
-FenixWasmModule.cpp(437,43): error : no member named 'clamp' in namespace 'std'
-FenixWasmModule.cpp(437,61): error : expected '(' for function-style cast or type construction
-FenixWasmModule.cpp(456,25): error : assigning to 'HANDLE' (aka 'unsigned long long') from incompatible type 'std::nullptr_t'
-FenixWasmModule.cpp(437,63): warning : left operand of comma operator has no effect [-Wunused-value]
-FenixWasmModule.cpp(437,114): warning : left operand of comma operator has no effect [-Wunused-value]
-FenixWasmModule.cpp(461,6): warning : '__stdcall' calling convention is not supported for this target [-Wignored-attributes]
+FenixWasmModule.cpp(479,6): warning : '__stdcall' calling convention is not supported for this target [-Wignored-attributes]
 F:\MSFS 2024 SDK\WASM\include\MSFS/Legacy/..\MSFS_WindowsTypes.h(129,21): message : expanded from macro 'CALLBACK'
-FenixWasmModule.cpp(484,27): error : invalid operands to binary expression ('HANDLE' (aka 'unsigned long long') and 'std::nullptr_t')
-FenixWasmModule.cpp(487,29): error : assigning to 'HANDLE' (aka 'unsigned long long') from incompatible type 'std::nullptr_t'
-FenixWasmModule.cpp(493,27): error : invalid operands to binary expression ('HANDLE' (aka 'unsigned long long') and 'std::nullptr_t')
-FenixWasmModule.cpp(496,29): error : assigning to 'HANDLE' (aka 'unsigned long long') from incompatible type 'std::nullptr_t'
-FenixWasmModule.cpp(508,23): error : invalid operands to binary expression ('HANDLE' (aka 'unsigned long long') and 'std::nullptr_t')
-FenixWasmModule.cpp(517,25): error : assigning to 'HANDLE' (aka 'unsigned long long') from incompatible type 'std::nullptr_t'
-FenixWasmModule.cpp(524,23): error : invalid operands to binary expression ('HANDLE' (aka 'unsigned long long') and 'std::nullptr_t')
-FenixWasmModule.cpp(530,86): error : too few arguments provided to function-like macro invocation
+FenixWasmModule.cpp(548,86): error : too few arguments provided to function-like macro invocation
 F:\MSFS 2024 SDK\WASM\include\MSFS/Legacy/..\MSFS_WindowsTypes.h(298,9): message : macro 'min' defined here
-FenixWasmModule.cpp(530,40): error : invalid operands to binary expression ('std::chrono::steady_clock::time_point' (aka 'time_point<std::chrono::steady_clock, duration<long long, ratio<1LL, 1000000000LL>>>') and 'std::chrono::time_point<std::chrono::steady_clock, std::chrono::duration<long long, std::ratio<1, 1000000000>>> () noexcept')
+FenixWasmModule.cpp(548,40): error : invalid operands to binary expression ('std::chrono::steady_clock::time_point' (aka 'time_point<std::chrono::steady_clock, duration<long long, ratio<1LL, 1000000000LL>>>') and 'std::chrono::time_point<std::chrono::steady_clock, std::chrono::duration<long long, std::ratio<1, 1000000000>>> () noexcept')
+F:\MSFS 2024 SDK\WASM\wasi-sysroot/include/c++/v1\chrono(1172,1): message : candidate template ignored: could not match 'duration' against 'time_point'
+F:\MSFS 2024 SDK\WASM\wasi-sysroot/include/c++/v1\chrono(1481,1): message : candidate template ignored: could not match 'time_point<_Clock, _Duration2>' against 'std::chrono::time_point<std::chrono::steady_clock, std::chrono::duration<long long, std::ratio<1, 1000000000>>> () noexcept'
 F:\MSFS 2024 SDK\WASM\wasi-sysroot/include/c++/v1\utility(584,1): message : candidate template ignored: could not match 'pair' against 'time_point'
 F:\MSFS 2024 SDK\WASM\wasi-sysroot/include/c++/v1\iterator(819,1): message : candidate template ignored: could not match 'reverse_iterator' against 'time_point'
 F:\MSFS 2024 SDK\WASM\wasi-sysroot/include/c++/v1\iterator(1041,1): message : candidate template ignored: could not match 'istream_iterator' against 'time_point'
@@ -259,8 +240,6 @@ F:\MSFS 2024 SDK\WASM\wasi-sysroot/include/c++/v1\memory(3445,1): message : cand
 F:\MSFS 2024 SDK\WASM\wasi-sysroot/include/c++/v1\memory(3453,1): message : candidate template ignored: could not match 'shared_ptr<_Tp>' against 'std::chrono::time_point<std::chrono::steady_clock, std::chrono::duration<long long, std::ratio<1, 1000000000>>> () noexcept'
 F:\MSFS 2024 SDK\WASM\wasi-sysroot/include/c++/v1\functional(2603,1): message : candidate template ignored: could not match 'function' against 'time_point'
 F:\MSFS 2024 SDK\WASM\wasi-sysroot/include/c++/v1\functional(2608,1): message : candidate template ignored: could not match 'function<_Rp (_ArgTypes...)>' against 'std::chrono::time_point<std::chrono::steady_clock, std::chrono::duration<long long, std::ratio<1, 1000000000>>> () noexcept'
-F:\MSFS 2024 SDK\WASM\wasi-sysroot/include/c++/v1\chrono(1172,1): message : candidate template ignored: could not match 'duration' against 'time_point'
-F:\MSFS 2024 SDK\WASM\wasi-sysroot/include/c++/v1\chrono(1481,1): message : candidate template ignored: could not match 'time_point<_Clock, _Duration2>' against 'std::chrono::time_point<std::chrono::steady_clock, std::chrono::duration<long long, std::ratio<1, 1000000000>>> () noexcept'
 F:\MSFS 2024 SDK\WASM\wasi-sysroot/include/c++/v1\string_view(682,6): message : candidate template ignored: could not match 'basic_string_view' against 'time_point'
 F:\MSFS 2024 SDK\WASM\wasi-sysroot/include/c++/v1\string_view(691,6): message : candidate template ignored: could not match 'basic_string_view' against 'time_point'
 F:\MSFS 2024 SDK\WASM\wasi-sysroot/include/c++/v1\string_view(701,6): message : candidate template ignored: could not match 'basic_string_view<_CharT, _Traits>' against 'std::chrono::time_point<std::chrono::steady_clock, std::chrono::duration<long long, std::ratio<1, 1000000000>>> (*)() noexcept'
@@ -270,26 +249,26 @@ F:\MSFS 2024 SDK\WASM\wasi-sysroot/include/c++/v1\string(4099,1): message : cand
 F:\MSFS 2024 SDK\WASM\wasi-sysroot/include/c++/v1\string(4108,1): message : candidate template ignored: could not match 'basic_string' against 'time_point'
 F:\MSFS 2024 SDK\WASM\wasi-sysroot/include/c++/v1\unordered_map(1846,1): message : candidate template ignored: could not match 'unordered_map' against 'time_point'
 F:\MSFS 2024 SDK\WASM\wasi-sysroot/include/c++/v1\unordered_map(2583,1): message : candidate template ignored: could not match 'unordered_multimap' against 'time_point'
-FenixWasmModule.cpp(538,12): error : cannot initialize a variable of type 'HANDLE' (aka 'unsigned long long') with an rvalue of type 'std::nullptr_t'
-FenixWasmModule.cpp(585,6): warning : '__stdcall' calling convention is not supported for this target [-Wignored-attributes]
+FenixWasmModule.cpp(603,6): warning : '__stdcall' calling convention is not supported for this target [-Wignored-attributes]
 F:\MSFS 2024 SDK\WASM\include\MSFS/Legacy/gauges.h(43,17): message : expanded from macro 'FSAPI'
-FenixWasmModule.cpp(589,6): warning : '__stdcall' calling convention is not supported for this target [-Wignored-attributes]
+FenixWasmModule.cpp(607,6): warning : '__stdcall' calling convention is not supported for this target [-Wignored-attributes]
 F:\MSFS 2024 SDK\WASM\include\MSFS/Legacy/gauges.h(43,17): message : expanded from macro 'FSAPI'
-FenixWasmModule.cpp(594,6): warning : '__stdcall' calling convention is not supported for this target [-Wignored-attributes]
+FenixWasmModule.cpp(612,6): warning : '__stdcall' calling convention is not supported for this target [-Wignored-attributes]
 F:\MSFS 2024 SDK\WASM\include\MSFS/Legacy/gauges.h(43,17): message : expanded from macro 'FSAPI'
-FenixWasmModule.cpp(599,6): warning : '__stdcall' calling convention is not supported for this target [-Wignored-attributes]
+FenixWasmModule.cpp(617,6): warning : '__stdcall' calling convention is not supported for this target [-Wignored-attributes]
 F:\MSFS 2024 SDK\WASM\include\MSFS/Legacy/gauges.h(43,17): message : expanded from macro 'FSAPI'
-FenixWasmModule.cpp(605,6): warning : '__stdcall' calling convention is not supported for this target [-Wignored-attributes]
+FenixWasmModule.cpp(623,6): warning : '__stdcall' calling convention is not supported for this target [-Wignored-attributes]
 F:\MSFS 2024 SDK\WASM\include\MSFS/Legacy/gauges.h(43,17): message : expanded from macro 'FSAPI'
-FenixWasmModule.cpp(610,6): warning : '__stdcall' calling convention is not supported for this target [-Wignored-attributes]
+FenixWasmModule.cpp(628,6): warning : '__stdcall' calling convention is not supported for this target [-Wignored-attributes]
 F:\MSFS 2024 SDK\WASM\include\MSFS/Legacy/gauges.h(43,17): message : expanded from macro 'FSAPI'
-FenixWasmModule.cpp(614,6): warning : '__stdcall' calling convention is not supported for this target [-Wignored-attributes]
+FenixWasmModule.cpp(632,6): warning : '__stdcall' calling convention is not supported for this target [-Wignored-attributes]
 F:\MSFS 2024 SDK\WASM\include\MSFS/Legacy/gauges.h(43,17): message : expanded from macro 'FSAPI'
-FenixWasmModule.cpp(644,12): warning : __declspec attribute 'dllexport' is not supported [-Wignored-attributes]
+FenixWasmModule.cpp(662,12): warning : __declspec attribute 'dllexport' is not supported [-Wignored-attributes]
 F:\MSFS 2024 SDK\WASM\include\MSFS/Legacy/gauges.h(36,36): message : expanded from macro 'DECLSPEC_EXPORT'
-FenixWasmModule.cpp(650,17): warning : '__stdcall' calling convention is not supported for this target [-Wignored-attributes]
+FenixWasmModule.cpp(668,17): warning : '__stdcall' calling convention is not supported for this target [-Wignored-attributes]
 F:\MSFS 2024 SDK\WASM\include\MSFS/Legacy/gauges.h(43,17): message : expanded from macro 'FSAPI'
-FenixWasmModule.cpp(655,17): warning : '__stdcall' calling convention is not supported for this target [-Wignored-attributes]
+FenixWasmModule.cpp(673,17): warning : '__stdcall' calling convention is not supported for this target [-Wignored-attributes]
 F:\MSFS 2024 SDK\WASM\include\MSFS/Legacy/gauges.h(43,17): message : expanded from macro 'FSAPI'
-FenixWasmModule.cpp(657,23): error : invalid operands to binary expression ('HANDLE' (aka 'unsigned long long') and 'std::nullptr_t')
-  fatal error: too many errors emitted, stopping now [-ferror-limit=]
+FenixWasmModule.cpp(683,5): warning : 'unregister_all_named_vars' is deprecated: Use MSFS_Event.h and MSFS_Vars.h instead [-Wdeprecated-declarations]
+F:\MSFS 2024 SDK\WASM\include\MSFS/Legacy/gauges.h(5339,4): message : 'unregister_all_named_vars' has been explicitly marked deprecated here
+FenixWasmModule.cpp(686,23): error : expected ';' after top level declarator

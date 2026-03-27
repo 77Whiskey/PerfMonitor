@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FenixFpm.Console")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+62606fd841fe608f4257b5c41e1cadb9f4ed6bc2")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+13a3c3c15628fa7ac750bf12ff5a9f83cbba077f")]
 [assembly: System.Reflection.AssemblyProductAttribute("FenixFpm.Console")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FenixFpm.Console")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
