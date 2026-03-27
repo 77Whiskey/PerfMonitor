@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "vWC6Y8r2a+M=",
+  "dgSpecHash": "cJxYXzb/wO4=",
   "success": true,
-  "projectFilePath": "F:\\Codex\\FSim\\src\\FenixFpm.Infrastructure\\FenixFpm.Infrastructure.csproj",
+  "projectFilePath": "F:\\Codex\\FSim\\PerfMonitor\\src\\FenixFpm.Infrastructure\\FenixFpm.Infrastructure.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\DARKSTAR\\.nuget\\packages\\microsoft.data.sqlite.core\\8.0.0\\microsoft.data.sqlite.core.8.0.0.nupkg.sha512",
     "C:\\Users\\DARKSTAR\\.nuget\\packages\\microsoft.entityframeworkcore\\8.0.0\\microsoft.entityframeworkcore.8.0.0.nupkg.sha512",

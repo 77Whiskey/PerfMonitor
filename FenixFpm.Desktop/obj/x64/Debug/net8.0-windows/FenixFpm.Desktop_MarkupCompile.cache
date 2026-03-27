@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-F:\Codex\FSim\FenixFpm.Desktop\obj\x64\Debug\net8.0-windows\
+F:\Codex\FSim\PerfMonitor\FenixFpm.Desktop\obj\x64\Debug\net8.0-windows\
 FenixFpm.Desktop
 none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP;WINDOWS;WINDOWS7_0;NET5_0_OR_GREATER;NET6_0_OR_GREATER;NET7_0_OR_GREATER;NET8_0_OR_GREATER;NETCOREAPP3_0_OR_GREATER;NETCOREAPP3_1_OR_GREATER;WINDOWS7_0_OR_GREATER
-F:\Codex\FSim\FenixFpm.Desktop\App.xaml
+F:\Codex\FSim\PerfMonitor\FenixFpm.Desktop\App.xaml
 81149358257
 
 19-1840675211
-253-1517361268
+253104742093
 MainWindow.xaml;Themes\DarkTheme.xaml;Views\ApproachView.xaml;Views\ClimbCruiseView.xaml;Views\DebriefView.xaml;Views\LandingView.xaml;Views\PreflightView.xaml;Views\TakeoffView.xaml;
 
 False

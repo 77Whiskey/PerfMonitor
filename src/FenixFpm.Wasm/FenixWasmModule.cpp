@@ -1,9 +1,9 @@
-#include "FenixFpmSharedMemory.h"
-
-#include <SimConnect.h>
-#include <MSFS/MSFS.h>
 #include <MSFS/MSFS_WindowsTypes.h>
 #include <MSFS/Legacy/gauges.h>
+#include <SimConnect.h>
+#include "FenixFpmSharedMemory.h"
+
+#include <MSFS/MSFS.h>
 
 #include <algorithm>
 #include <chrono>

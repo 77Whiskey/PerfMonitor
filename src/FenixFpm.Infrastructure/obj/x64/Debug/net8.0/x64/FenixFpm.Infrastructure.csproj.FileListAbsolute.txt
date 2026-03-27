@@ -17,3 +17,12 @@ F:\Codex\FSim\src\FenixFpm.Infrastructure\obj\x64\Debug\net8.0\x64\FenixFpm.Infr
 F:\Codex\FSim\src\FenixFpm.Infrastructure\obj\x64\Debug\net8.0\x64\refint\FenixFpm.Infrastructure.dll
 F:\Codex\FSim\src\FenixFpm.Infrastructure\obj\x64\Debug\net8.0\x64\FenixFpm.Infrastructure.pdb
 F:\Codex\FSim\src\FenixFpm.Infrastructure\obj\x64\Debug\net8.0\x64\ref\FenixFpm.Infrastructure.dll
+F:\Codex\FSim\PerfMonitor\src\FenixFpm.Infrastructure\obj\x64\Debug\net8.0\x64\FenixFpm.Infrastructure.csproj.AssemblyReference.cache
+F:\Codex\FSim\PerfMonitor\src\FenixFpm.Infrastructure\obj\x64\Debug\net8.0\x64\FenixFpm.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+F:\Codex\FSim\PerfMonitor\src\FenixFpm.Infrastructure\obj\x64\Debug\net8.0\x64\FenixFpm.Infrastructure.AssemblyInfoInputs.cache
+F:\Codex\FSim\PerfMonitor\src\FenixFpm.Infrastructure\obj\x64\Debug\net8.0\x64\FenixFpm.Infrastructure.AssemblyInfo.cs
+F:\Codex\FSim\PerfMonitor\src\FenixFpm.Infrastructure\obj\x64\Debug\net8.0\x64\FenixFpm.Infrastructure.csproj.CoreCompileInputs.cache
+F:\Codex\FSim\PerfMonitor\src\FenixFpm.Infrastructure\obj\x64\Debug\net8.0\x64\FenixFpm.Infrastructure.sourcelink.json
+F:\Codex\FSim\PerfMonitor\src\FenixFpm.Infrastructure\obj\x64\Debug\net8.0\x64\FenixFpm.Infrastructure.dll
+F:\Codex\FSim\PerfMonitor\src\FenixFpm.Infrastructure\obj\x64\Debug\net8.0\x64\refint\FenixFpm.Infrastructure.dll
+F:\Codex\FSim\PerfMonitor\src\FenixFpm.Infrastructure\obj\x64\Debug\net8.0\x64\FenixFpm.Infrastructure.pdb

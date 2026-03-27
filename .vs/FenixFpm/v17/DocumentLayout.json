@@ -1,25 +1,23 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "F:\\Codex\\FSim\\",
+  "WorkspaceRootPath": "F:\\Codex\\FSim\\PerfMonitor\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{FEC01E03-4F6B-4DE9-8D6F-FCAE78846FB1}|src\\FenixFpm.Infrastructure\\FenixFpm.Infrastructure.csproj|f:\\codex\\fsim\\src\\fenixfpm.infrastructure\\fenixfpm.infrastructure.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "AbsoluteMoniker": "D:0:0:{FEC01E03-4F6B-4DE9-8D6F-FCAE78846FB1}|src\\FenixFpm.Infrastructure\\FenixFpm.Infrastructure.csproj|f:\\codex\\fsim\\perfmonitor\\src\\fenixfpm.infrastructure\\fenixfpm.infrastructure.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
       "RelativeMoniker": "D:0:0:{FEC01E03-4F6B-4DE9-8D6F-FCAE78846FB1}|src\\FenixFpm.Infrastructure\\FenixFpm.Infrastructure.csproj|solutionrelative:src\\fenixfpm.infrastructure\\fenixfpm.infrastructure.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6BBB47CF-C62B-40CE-A95B-DD99C26A5104}|FenixFpm.Desktop\\FenixFpm.Desktop.csproj|f:\\codex\\fsim\\fenixfpm.desktop\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "AbsoluteMoniker": "D:0:0:{6BBB47CF-C62B-40CE-A95B-DD99C26A5104}|FenixFpm.Desktop\\FenixFpm.Desktop.csproj|f:\\codex\\fsim\\perfmonitor\\fenixfpm.desktop\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{6BBB47CF-C62B-40CE-A95B-DD99C26A5104}|FenixFpm.Desktop\\FenixFpm.Desktop.csproj|solutionrelative:fenixfpm.desktop\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Codex\\FSim\\FenixFpm.Dashboard\\Components\\Pages\\Home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:FenixFpm.Dashboard\\Components\\Pages\\Home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Codex\\FSim\\FenixFpm.Dashboard\\Components\\Pages\\Home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Codex\\FSim\\FenixFpm.Dashboard\\Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:FenixFpm.Dashboard\\Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Codex\\FSim\\FenixFpm.Dashboard\\Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{FEC01E03-4F6B-4DE9-8D6F-FCAE78846FB1}|src\\FenixFpm.Infrastructure\\FenixFpm.Infrastructure.csproj|f:\\codex\\fsim\\src\\fenixfpm.infrastructure\\sharedmemory\\fenixsharedmemoryreader.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{FEC01E03-4F6B-4DE9-8D6F-FCAE78846FB1}|src\\FenixFpm.Infrastructure\\FenixFpm.Infrastructure.csproj|f:\\codex\\fsim\\perfmonitor\\src\\fenixfpm.infrastructure\\sharedmemory\\fenixsharedmemoryreader.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{FEC01E03-4F6B-4DE9-8D6F-FCAE78846FB1}|src\\FenixFpm.Infrastructure\\FenixFpm.Infrastructure.csproj|solutionrelative:src\\fenixfpm.infrastructure\\sharedmemory\\fenixsharedmemoryreader.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -30,19 +28,15 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 4,
           "Children": [
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
-            },
             {
               "$type": "Document",
               "DocumentIndex": 1,
               "Title": "MainWindow.xaml",
-              "DocumentMoniker": "F:\\Codex\\FSim\\FenixFpm.Desktop\\MainWindow.xaml",
+              "DocumentMoniker": "F:\\Codex\\FSim\\PerfMonitor\\FenixFpm.Desktop\\MainWindow.xaml",
               "RelativeDocumentMoniker": "FenixFpm.Desktop\\MainWindow.xaml",
-              "ToolTip": "F:\\Codex\\FSim\\FenixFpm.Desktop\\MainWindow.xaml",
+              "ToolTip": "F:\\Codex\\FSim\\PerfMonitor\\FenixFpm.Desktop\\MainWindow.xaml",
               "RelativeToolTip": "FenixFpm.Desktop\\MainWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
               "WhenOpened": "2026-03-25T12:12:07.802Z"
@@ -51,9 +45,9 @@
               "$type": "Document",
               "DocumentIndex": 4,
               "Title": "FenixSharedMemoryReader.cs",
-              "DocumentMoniker": "F:\\Codex\\FSim\\src\\FenixFpm.Infrastructure\\SharedMemory\\FenixSharedMemoryReader.cs",
+              "DocumentMoniker": "F:\\Codex\\FSim\\PerfMonitor\\src\\FenixFpm.Infrastructure\\SharedMemory\\FenixSharedMemoryReader.cs",
               "RelativeDocumentMoniker": "src\\FenixFpm.Infrastructure\\SharedMemory\\FenixSharedMemoryReader.cs",
-              "ToolTip": "F:\\Codex\\FSim\\src\\FenixFpm.Infrastructure\\SharedMemory\\FenixSharedMemoryReader.cs",
+              "ToolTip": "F:\\Codex\\FSim\\PerfMonitor\\src\\FenixFpm.Infrastructure\\SharedMemory\\FenixSharedMemoryReader.cs",
               "RelativeToolTip": "src\\FenixFpm.Infrastructure\\SharedMemory\\FenixSharedMemoryReader.cs",
               "ViewState": "AgIAAJMAAAAAAAAAAAAQwLsAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -64,9 +58,9 @@
               "DocumentIndex": 2,
               "Title": "Home.razor",
               "DocumentMoniker": "F:\\Codex\\FSim\\FenixFpm.Dashboard\\Components\\Pages\\Home.razor",
-              "RelativeDocumentMoniker": "FenixFpm.Dashboard\\Components\\Pages\\Home.razor",
+              "RelativeDocumentMoniker": "..\\FenixFpm.Dashboard\\Components\\Pages\\Home.razor",
               "ToolTip": "F:\\Codex\\FSim\\FenixFpm.Dashboard\\Components\\Pages\\Home.razor",
-              "RelativeToolTip": "FenixFpm.Dashboard\\Components\\Pages\\Home.razor",
+              "RelativeToolTip": "..\\FenixFpm.Dashboard\\Components\\Pages\\Home.razor",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2026-03-24T19:09:21.562Z"
             },
@@ -75,9 +69,9 @@
               "DocumentIndex": 3,
               "Title": "Program.cs",
               "DocumentMoniker": "F:\\Codex\\FSim\\FenixFpm.Dashboard\\Program.cs",
-              "RelativeDocumentMoniker": "FenixFpm.Dashboard\\Program.cs",
+              "RelativeDocumentMoniker": "..\\FenixFpm.Dashboard\\Program.cs",
               "ToolTip": "F:\\Codex\\FSim\\FenixFpm.Dashboard\\Program.cs",
-              "RelativeToolTip": "FenixFpm.Dashboard\\Program.cs",
+              "RelativeToolTip": "..\\FenixFpm.Dashboard\\Program.cs",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-24T19:07:58.085Z"
             },
@@ -85,9 +79,9 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "FenixFpm.Infrastructure.csproj",
-              "DocumentMoniker": "F:\\Codex\\FSim\\src\\FenixFpm.Infrastructure\\FenixFpm.Infrastructure.csproj",
+              "DocumentMoniker": "F:\\Codex\\FSim\\PerfMonitor\\src\\FenixFpm.Infrastructure\\FenixFpm.Infrastructure.csproj",
               "RelativeDocumentMoniker": "src\\FenixFpm.Infrastructure\\FenixFpm.Infrastructure.csproj",
-              "ToolTip": "F:\\Codex\\FSim\\src\\FenixFpm.Infrastructure\\FenixFpm.Infrastructure.csproj",
+              "ToolTip": "F:\\Codex\\FSim\\PerfMonitor\\src\\FenixFpm.Infrastructure\\FenixFpm.Infrastructure.csproj",
               "RelativeToolTip": "src\\FenixFpm.Infrastructure\\FenixFpm.Infrastructure.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",

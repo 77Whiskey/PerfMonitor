@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FenixFpm.Core")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+337aaae7cf248dfb803280a64f67e5973c28756f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+62606fd841fe608f4257b5c41e1cadb9f4ed6bc2")]
 [assembly: System.Reflection.AssemblyProductAttribute("FenixFpm.Core")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FenixFpm.Core")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

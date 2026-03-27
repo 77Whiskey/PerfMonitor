@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "F:\\Codex\\FSim\\src\\FenixFpm.Console\\FenixFpm.Console.csproj": {}
+    "F:\\Codex\\FSim\\PerfMonitor\\src\\FenixFpm.Console\\FenixFpm.Console.csproj": {}
   },
   "projects": {
-    "F:\\Codex\\FSim\\src\\FenixFpm.Console\\FenixFpm.Console.csproj": {
+    "F:\\Codex\\FSim\\PerfMonitor\\src\\FenixFpm.Console\\FenixFpm.Console.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\Codex\\FSim\\src\\FenixFpm.Console\\FenixFpm.Console.csproj",
+        "projectUniqueName": "F:\\Codex\\FSim\\PerfMonitor\\src\\FenixFpm.Console\\FenixFpm.Console.csproj",
         "projectName": "FenixFpm.Console",
-        "projectPath": "F:\\Codex\\FSim\\src\\FenixFpm.Console\\FenixFpm.Console.csproj",
+        "projectPath": "F:\\Codex\\FSim\\PerfMonitor\\src\\FenixFpm.Console\\FenixFpm.Console.csproj",
         "packagesPath": "C:\\Users\\DARKSTAR\\.nuget\\packages\\",
-        "outputPath": "F:\\Codex\\FSim\\src\\FenixFpm.Console\\obj\\",
+        "outputPath": "F:\\Codex\\FSim\\PerfMonitor\\src\\FenixFpm.Console\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -32,14 +32,14 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "F:\\Codex\\FSim\\src\\FenixFpm.Contracts\\FenixFpm.Contracts.csproj": {
-                "projectPath": "F:\\Codex\\FSim\\src\\FenixFpm.Contracts\\FenixFpm.Contracts.csproj"
+              "F:\\Codex\\FSim\\PerfMonitor\\src\\FenixFpm.Contracts\\FenixFpm.Contracts.csproj": {
+                "projectPath": "F:\\Codex\\FSim\\PerfMonitor\\src\\FenixFpm.Contracts\\FenixFpm.Contracts.csproj"
               },
-              "F:\\Codex\\FSim\\src\\FenixFpm.Core\\FenixFpm.Core.csproj": {
-                "projectPath": "F:\\Codex\\FSim\\src\\FenixFpm.Core\\FenixFpm.Core.csproj"
+              "F:\\Codex\\FSim\\PerfMonitor\\src\\FenixFpm.Core\\FenixFpm.Core.csproj": {
+                "projectPath": "F:\\Codex\\FSim\\PerfMonitor\\src\\FenixFpm.Core\\FenixFpm.Core.csproj"
               },
-              "F:\\Codex\\FSim\\src\\FenixFpm.Infrastructure\\FenixFpm.Infrastructure.csproj": {
-                "projectPath": "F:\\Codex\\FSim\\src\\FenixFpm.Infrastructure\\FenixFpm.Infrastructure.csproj"
+              "F:\\Codex\\FSim\\PerfMonitor\\src\\FenixFpm.Infrastructure\\FenixFpm.Infrastructure.csproj": {
+                "projectPath": "F:\\Codex\\FSim\\PerfMonitor\\src\\FenixFpm.Infrastructure\\FenixFpm.Infrastructure.csproj"
               }
             }
           }
@@ -79,14 +79,14 @@
         }
       }
     },
-    "F:\\Codex\\FSim\\src\\FenixFpm.Contracts\\FenixFpm.Contracts.csproj": {
+    "F:\\Codex\\FSim\\PerfMonitor\\src\\FenixFpm.Contracts\\FenixFpm.Contracts.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\Codex\\FSim\\src\\FenixFpm.Contracts\\FenixFpm.Contracts.csproj",
+        "projectUniqueName": "F:\\Codex\\FSim\\PerfMonitor\\src\\FenixFpm.Contracts\\FenixFpm.Contracts.csproj",
         "projectName": "FenixFpm.Contracts",
-        "projectPath": "F:\\Codex\\FSim\\src\\FenixFpm.Contracts\\FenixFpm.Contracts.csproj",
+        "projectPath": "F:\\Codex\\FSim\\PerfMonitor\\src\\FenixFpm.Contracts\\FenixFpm.Contracts.csproj",
         "packagesPath": "C:\\Users\\DARKSTAR\\.nuget\\packages\\",
-        "outputPath": "F:\\Codex\\FSim\\src\\FenixFpm.Contracts\\obj\\",
+        "outputPath": "F:\\Codex\\FSim\\PerfMonitor\\src\\FenixFpm.Contracts\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -144,14 +144,14 @@
         }
       }
     },
-    "F:\\Codex\\FSim\\src\\FenixFpm.Core\\FenixFpm.Core.csproj": {
+    "F:\\Codex\\FSim\\PerfMonitor\\src\\FenixFpm.Core\\FenixFpm.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\Codex\\FSim\\src\\FenixFpm.Core\\FenixFpm.Core.csproj",
+        "projectUniqueName": "F:\\Codex\\FSim\\PerfMonitor\\src\\FenixFpm.Core\\FenixFpm.Core.csproj",
         "projectName": "FenixFpm.Core",
-        "projectPath": "F:\\Codex\\FSim\\src\\FenixFpm.Core\\FenixFpm.Core.csproj",
+        "projectPath": "F:\\Codex\\FSim\\PerfMonitor\\src\\FenixFpm.Core\\FenixFpm.Core.csproj",
         "packagesPath": "C:\\Users\\DARKSTAR\\.nuget\\packages\\",
-        "outputPath": "F:\\Codex\\FSim\\src\\FenixFpm.Core\\obj\\",
+        "outputPath": "F:\\Codex\\FSim\\PerfMonitor\\src\\FenixFpm.Core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -209,14 +209,14 @@
         }
       }
     },
-    "F:\\Codex\\FSim\\src\\FenixFpm.Infrastructure\\FenixFpm.Infrastructure.csproj": {
+    "F:\\Codex\\FSim\\PerfMonitor\\src\\FenixFpm.Infrastructure\\FenixFpm.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\Codex\\FSim\\src\\FenixFpm.Infrastructure\\FenixFpm.Infrastructure.csproj",
+        "projectUniqueName": "F:\\Codex\\FSim\\PerfMonitor\\src\\FenixFpm.Infrastructure\\FenixFpm.Infrastructure.csproj",
         "projectName": "FenixFpm.Infrastructure",
-        "projectPath": "F:\\Codex\\FSim\\src\\FenixFpm.Infrastructure\\FenixFpm.Infrastructure.csproj",
+        "projectPath": "F:\\Codex\\FSim\\PerfMonitor\\src\\FenixFpm.Infrastructure\\FenixFpm.Infrastructure.csproj",
         "packagesPath": "C:\\Users\\DARKSTAR\\.nuget\\packages\\",
-        "outputPath": "F:\\Codex\\FSim\\src\\FenixFpm.Infrastructure\\obj\\",
+        "outputPath": "F:\\Codex\\FSim\\PerfMonitor\\src\\FenixFpm.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -237,11 +237,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "F:\\Codex\\FSim\\src\\FenixFpm.Contracts\\FenixFpm.Contracts.csproj": {
-                "projectPath": "F:\\Codex\\FSim\\src\\FenixFpm.Contracts\\FenixFpm.Contracts.csproj"
+              "F:\\Codex\\FSim\\PerfMonitor\\src\\FenixFpm.Contracts\\FenixFpm.Contracts.csproj": {
+                "projectPath": "F:\\Codex\\FSim\\PerfMonitor\\src\\FenixFpm.Contracts\\FenixFpm.Contracts.csproj"
               },
-              "F:\\Codex\\FSim\\src\\FenixFpm.Core\\FenixFpm.Core.csproj": {
-                "projectPath": "F:\\Codex\\FSim\\src\\FenixFpm.Core\\FenixFpm.Core.csproj"
+              "F:\\Codex\\FSim\\PerfMonitor\\src\\FenixFpm.Core\\FenixFpm.Core.csproj": {
+                "projectPath": "F:\\Codex\\FSim\\PerfMonitor\\src\\FenixFpm.Core\\FenixFpm.Core.csproj"
               }
             }
           }

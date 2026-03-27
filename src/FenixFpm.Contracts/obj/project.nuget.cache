@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "hmtwe80ywiM=",
+  "dgSpecHash": "r/TNVwfJadI=",
   "success": true,
-  "projectFilePath": "F:\\Codex\\FSim\\src\\FenixFpm.Contracts\\FenixFpm.Contracts.csproj",
+  "projectFilePath": "F:\\Codex\\FSim\\PerfMonitor\\src\\FenixFpm.Contracts\\FenixFpm.Contracts.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
