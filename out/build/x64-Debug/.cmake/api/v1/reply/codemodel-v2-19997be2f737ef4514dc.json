@@ -1,0 +1,101 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1,
+						2
+					],
+					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.26"
+					},
+					"projectIndex" : 0,
+					"source" : "."
+				},
+				{
+					"build" : "src/Probe.Wasm",
+					"jsonFile" : "directory-src.Probe.Wasm-Debug-468367c4fb81a536b133.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.26"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "src/Probe.Wasm",
+					"targetIndexes" : 
+					[
+						1
+					]
+				},
+				{
+					"build" : "src/Bridge.Native",
+					"jsonFile" : "directory-src.Bridge.Native-Debug-1feae83443a6fb589dd3.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.26"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "src/Bridge.Native",
+					"targetIndexes" : 
+					[
+						0
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0,
+						1,
+						2
+					],
+					"name" : "FenixFpm",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 2,
+					"id" : "FenixFpmBridgeHarness::@cca48254da6e543f6f19",
+					"jsonFile" : "target-FenixFpmBridgeHarness-Debug-5212f43d66ce7ace6d3e.json",
+					"name" : "FenixFpmBridgeHarness",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "FenixFpmProbe::@359491ecddfa6f67ba4e",
+					"jsonFile" : "target-FenixFpmProbe-Debug-a7db8099088f74da7502.json",
+					"name" : "FenixFpmProbe",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "F:/Codex/FSim/out/build/x64-Debug",
+		"source" : "F:/Codex/FSim"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 8
+	}
+}

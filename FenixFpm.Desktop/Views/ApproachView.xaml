@@ -1,0 +1,388 @@
+﻿<UserControl x:Class="FenixFpm.Desktop.Views.ApproachView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
+             mc:Ignorable="d"
+             d:DesignHeight="760"
+             d:DesignWidth="1180">
+    <UserControl.Resources>
+        <SolidColorBrush x:Key="ViewBackgroundBrush" Color="#FF121212" />
+        <SolidColorBrush x:Key="PanelBrush" Color="#FF1E1E1E" />
+        <SolidColorBrush x:Key="PanelBorderBrush" Color="#FF2B2B2B" />
+        <SolidColorBrush x:Key="PrimaryTextBrush" Color="#FFF5F7FA" />
+        <SolidColorBrush x:Key="SecondaryTextBrush" Color="#FF96A0AA" />
+        <SolidColorBrush x:Key="AccentBrush" Color="#FF00A8FF" />
+        <SolidColorBrush x:Key="GoodBrush" Color="#FF46D28A" />
+        <SolidColorBrush x:Key="WarningBrush" Color="#FFFFB347" />
+        <SolidColorBrush x:Key="GridBrush" Color="#FF242424" />
+
+        <Style x:Key="PanelStyle" TargetType="Border">
+            <Setter Property="Background" Value="{StaticResource PanelBrush}" />
+            <Setter Property="BorderBrush" Value="{StaticResource PanelBorderBrush}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="18" />
+            <Setter Property="Padding" Value="22" />
+        </Style>
+
+        <Style x:Key="SectionTitleStyle" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Bahnschrift" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Foreground" Value="{StaticResource SecondaryTextBrush}" />
+        </Style>
+
+        <Style x:Key="MetricReadoutStyle" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Bahnschrift" />
+            <Setter Property="FontSize" Value="34" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Foreground" Value="{StaticResource AccentBrush}" />
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Background="{StaticResource ViewBackgroundBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="24" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0">
+            <TextBlock Text="APPROACH &amp; STABILIZATION MONITORING"
+                       FontFamily="Bahnschrift"
+                       FontSize="28"
+                       FontWeight="Bold"
+                       Foreground="{StaticResource PrimaryTextBrush}" />
+            <TextBlock Margin="0,6,0,0"
+                       Text="Live sink-rate trend, gate context, and exceedance review for the terminal segment."
+                       FontFamily="Bahnschrift"
+                       FontSize="13"
+                       Foreground="{StaticResource SecondaryTextBrush}" />
+        </StackPanel>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="20" />
+                <ColumnDefinition Width="340" />
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="20" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="20" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Border Grid.Row="0" Style="{StaticResource PanelStyle}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="20" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="20" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="20" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="AIRSPEED" Style="{StaticResource SectionTitleStyle}" />
+                            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                                <TextBlock Text="{Binding ActiveFlight.IndicatedAirspeedKnots, StringFormat={}{0:F0}}"
+                                           Style="{StaticResource MetricReadoutStyle}" />
+                                <TextBlock Margin="8,0,0,6"
+                                           VerticalAlignment="Bottom"
+                                           Text="KT"
+                                           FontFamily="Bahnschrift"
+                                           FontSize="14"
+                                           Foreground="{StaticResource SecondaryTextBrush}" />
+                            </StackPanel>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="RADIO ALT" Style="{StaticResource SectionTitleStyle}" />
+                            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                                <TextBlock Text="{Binding ActiveFlight.RadioAltitudeFeet, StringFormat={}{0:F0}}"
+                                           Style="{StaticResource MetricReadoutStyle}" />
+                                <TextBlock Margin="8,0,0,6"
+                                           VerticalAlignment="Bottom"
+                                           Text="FT"
+                                           FontFamily="Bahnschrift"
+                                           FontSize="14"
+                                           Foreground="{StaticResource SecondaryTextBrush}" />
+                            </StackPanel>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="4">
+                            <TextBlock Text="GEAR" Style="{StaticResource SectionTitleStyle}" />
+                            <TextBlock Margin="0,10,0,0"
+                                       FontFamily="Bahnschrift"
+                                       FontSize="34"
+                                       FontWeight="Bold">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Text" Value="UP" />
+                                        <Setter Property="Foreground" Value="{StaticResource WarningBrush}" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ActiveFlight.GearDown}" Value="True">
+                                                <Setter Property="Text" Value="DOWN" />
+                                                <Setter Property="Foreground" Value="{StaticResource GoodBrush}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="6">
+                            <TextBlock Text="AUTOBRAKE" Style="{StaticResource SectionTitleStyle}" />
+                            <TextBlock Margin="0,10,0,0"
+                                       Text="{Binding ActiveFlight.AutobrakeMode}"
+                                       Style="{StaticResource MetricReadoutStyle}" />
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <Border Grid.Row="2" Style="{StaticResource PanelStyle}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="16" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="16" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="LIVE SINK RATE HISTORY"
+                                       Style="{StaticResource SectionTitleStyle}" />
+                            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                <TextBlock Text="CURRENT"
+                                           FontFamily="Bahnschrift"
+                                           FontSize="11"
+                                           Foreground="{StaticResource SecondaryTextBrush}" />
+                                <TextBlock Margin="10,0,0,0"
+                                           FontFamily="Bahnschrift"
+                                           FontSize="18"
+                                           FontWeight="Bold"
+                                           Foreground="{StaticResource PrimaryTextBrush}"
+                                           Text="{Binding ActiveFlight.VerticalSpeedFpm, StringFormat={}{0:F0} FPM}" />
+                            </StackPanel>
+                        </Grid>
+
+                        <TextBlock Grid.Row="2"
+                                   Text="Last 60 seconds, sampled once per second from live telemetry updates."
+                                   FontFamily="Bahnschrift"
+                                   FontSize="12"
+                                   Foreground="{StaticResource SecondaryTextBrush}" />
+
+                        <Border Grid.Row="4"
+                                CornerRadius="14"
+                                Background="#FF171717"
+                                BorderBrush="{StaticResource GridBrush}"
+                                BorderThickness="1"
+                                Padding="12">
+                            <lvc:CartesianChart Series="{Binding SinkRateSeries}"
+                                                XAxes="{Binding XAxes}"
+                                                YAxes="{Binding YAxes}"
+                                                Background="Transparent" />
+                        </Border>
+                    </Grid>
+                </Border>
+
+                <Border Grid.Row="4" Style="{StaticResource PanelStyle}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="20" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="20" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="LATERAL MODE" Style="{StaticResource SectionTitleStyle}" />
+                            <TextBlock Margin="0,10,0,0"
+                                       FontFamily="Bahnschrift"
+                                       FontSize="18"
+                                       FontWeight="Bold"
+                                       Foreground="{StaticResource PrimaryTextBrush}"
+                                       Text="{Binding ActiveFlight.LateralMode}" />
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="VERTICAL MODE" Style="{StaticResource SectionTitleStyle}" />
+                            <TextBlock Margin="0,10,0,0"
+                                       FontFamily="Bahnschrift"
+                                       FontSize="18"
+                                       FontWeight="Bold"
+                                       Foreground="{StaticResource PrimaryTextBrush}"
+                                       Text="{Binding ActiveFlight.VerticalMode}" />
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="4">
+                            <TextBlock Text="FLAPS" Style="{StaticResource SectionTitleStyle}" />
+                            <TextBlock Margin="0,10,0,0"
+                                       FontFamily="Bahnschrift"
+                                       FontSize="18"
+                                       FontWeight="Bold"
+                                       Foreground="{StaticResource PrimaryTextBrush}"
+                                       Text="{Binding ActiveFlight.FlapsHandleIndex, StringFormat=CONF {0:F0}}" />
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <Border Grid.Column="2" Style="{StaticResource PanelStyle}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="20" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="20" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="STABILIZATION STATUS"
+                               Style="{StaticResource SectionTitleStyle}" />
+
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="20" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="16" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <Border Grid.Row="0" Grid.Column="0"
+                                Padding="16"
+                                CornerRadius="14"
+                                Background="#FF171717"
+                                BorderBrush="{StaticResource GridBrush}"
+                                BorderThickness="1">
+                            <StackPanel>
+                                <TextBlock Text="SPOILERS" Style="{StaticResource SectionTitleStyle}" />
+                                <TextBlock Margin="0,10,0,0"
+                                           FontFamily="Bahnschrift"
+                                           FontSize="18"
+                                           FontWeight="Bold"
+                                           Foreground="{StaticResource PrimaryTextBrush}"
+                                           Text="{Binding ActiveFlight.SpoilersPercent, StringFormat={}{0:F0}%}" />
+                            </StackPanel>
+                        </Border>
+
+                        <Border Grid.Row="0" Grid.Column="2"
+                                Padding="16"
+                                CornerRadius="14"
+                                Background="#FF171717"
+                                BorderBrush="{StaticResource GridBrush}"
+                                BorderThickness="1">
+                            <StackPanel>
+                                <TextBlock Text="PITCH" Style="{StaticResource SectionTitleStyle}" />
+                                <TextBlock Margin="0,10,0,0"
+                                           FontFamily="Bahnschrift"
+                                           FontSize="18"
+                                           FontWeight="Bold"
+                                           Foreground="{StaticResource PrimaryTextBrush}"
+                                           Text="{Binding ActiveFlight.PitchDegrees, StringFormat={}{0:F1} DEG}" />
+                            </StackPanel>
+                        </Border>
+
+                        <Border Grid.Row="2" Grid.Column="0"
+                                Padding="16"
+                                CornerRadius="14"
+                                Background="#FF171717"
+                                BorderBrush="{StaticResource GridBrush}"
+                                BorderThickness="1">
+                            <StackPanel>
+                                <TextBlock Text="BANK" Style="{StaticResource SectionTitleStyle}" />
+                                <TextBlock Margin="0,10,0,0"
+                                           FontFamily="Bahnschrift"
+                                           FontSize="18"
+                                           FontWeight="Bold"
+                                           Foreground="{StaticResource PrimaryTextBrush}"
+                                           Text="{Binding ActiveFlight.BankDegrees, StringFormat={}{0:F1} DEG}" />
+                            </StackPanel>
+                        </Border>
+
+                        <Border Grid.Row="2" Grid.Column="2"
+                                Padding="16"
+                                CornerRadius="14"
+                                Background="#FF171717"
+                                BorderBrush="{StaticResource GridBrush}"
+                                BorderThickness="1">
+                            <StackPanel>
+                                <TextBlock Text="WARNINGS" Style="{StaticResource SectionTitleStyle}" />
+                                <TextBlock Margin="0,10,0,0"
+                                           FontFamily="Bahnschrift"
+                                           FontSize="18"
+                                           FontWeight="Bold"
+                                           Foreground="{StaticResource WarningBrush}"
+                                           Text="{Binding ActiveFlight.WarningCount}" />
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+
+                    <TextBlock Grid.Row="4"
+                               Text="RECENT EVENTS"
+                               Style="{StaticResource SectionTitleStyle}" />
+                    <Border Grid.Row="4"
+                            Margin="0,28,0,0"
+                            CornerRadius="14"
+                            Background="#FF171717"
+                            BorderBrush="{StaticResource GridBrush}"
+                            BorderThickness="1"
+                            Padding="12">
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <ItemsControl ItemsSource="{Binding ActiveFlight.RecentEvents}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Margin="0,0,0,10"
+                                                Padding="12"
+                                                CornerRadius="10"
+                                                Background="#FF1A1A1A"
+                                                BorderBrush="{StaticResource GridBrush}"
+                                                BorderThickness="1">
+                                            <StackPanel>
+                                                <TextBlock Text="{Binding EventType}"
+                                                           FontFamily="Bahnschrift"
+                                                           FontSize="12"
+                                                           FontWeight="SemiBold"
+                                                           Foreground="{StaticResource PrimaryTextBrush}" />
+                                                <TextBlock Margin="0,4,0,0"
+                                                           Text="{Binding Description}"
+                                                           FontFamily="Bahnschrift"
+                                                           FontSize="11"
+                                                           TextWrapping="Wrap"
+                                                           Foreground="{StaticResource SecondaryTextBrush}" />
+                                                <TextBlock Margin="0,6,0,0"
+                                                           Text="{Binding Timestamp, StringFormat={}{0:HH:mm:ss}}"
+                                                           FontFamily="Bahnschrift"
+                                                           FontSize="10"
+                                                           Foreground="{StaticResource SecondaryTextBrush}" />
+                                            </StackPanel>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </Border>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>
+

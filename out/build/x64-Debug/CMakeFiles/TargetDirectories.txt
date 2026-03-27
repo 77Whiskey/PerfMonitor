@@ -1,0 +1,8 @@
+F:/Codex/FSim/out/build/x64-Debug/CMakeFiles/edit_cache.dir
+F:/Codex/FSim/out/build/x64-Debug/CMakeFiles/rebuild_cache.dir
+F:/Codex/FSim/out/build/x64-Debug/src/Probe.Wasm/CMakeFiles/FenixFpmProbe.dir
+F:/Codex/FSim/out/build/x64-Debug/src/Probe.Wasm/CMakeFiles/edit_cache.dir
+F:/Codex/FSim/out/build/x64-Debug/src/Probe.Wasm/CMakeFiles/rebuild_cache.dir
+F:/Codex/FSim/out/build/x64-Debug/src/Bridge.Native/CMakeFiles/FenixFpmBridgeHarness.dir
+F:/Codex/FSim/out/build/x64-Debug/src/Bridge.Native/CMakeFiles/edit_cache.dir
+F:/Codex/FSim/out/build/x64-Debug/src/Bridge.Native/CMakeFiles/rebuild_cache.dir

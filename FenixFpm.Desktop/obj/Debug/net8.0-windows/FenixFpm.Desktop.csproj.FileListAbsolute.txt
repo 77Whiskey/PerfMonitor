@@ -1,0 +1,10 @@
+F:\Codex\FSim\FenixFpm.Desktop\obj\Debug\net8.0-windows\FenixFpm.Desktop.csproj.AssemblyReference.cache
+F:\Codex\FSim\FenixFpm.Desktop\obj\Debug\net8.0-windows\Views\ClimbCruiseView.baml
+F:\Codex\FSim\FenixFpm.Desktop\obj\Debug\net8.0-windows\Views\DebriefView.baml
+F:\Codex\FSim\FenixFpm.Desktop\obj\Debug\net8.0-windows\MainWindow.g.cs
+F:\Codex\FSim\FenixFpm.Desktop\obj\Debug\net8.0-windows\Views\ClimbCruiseView.g.cs
+F:\Codex\FSim\FenixFpm.Desktop\obj\Debug\net8.0-windows\Views\DebriefView.g.cs
+F:\Codex\FSim\FenixFpm.Desktop\obj\Debug\net8.0-windows\App.g.cs
+F:\Codex\FSim\FenixFpm.Desktop\obj\Debug\net8.0-windows\GeneratedInternalTypeHelper.g.cs
+F:\Codex\FSim\FenixFpm.Desktop\obj\Debug\net8.0-windows\FenixFpm.Desktop_MarkupCompile.cache
+F:\Codex\FSim\FenixFpm.Desktop\obj\Debug\net8.0-windows\FenixFpm.Desktop_MarkupCompile.lref

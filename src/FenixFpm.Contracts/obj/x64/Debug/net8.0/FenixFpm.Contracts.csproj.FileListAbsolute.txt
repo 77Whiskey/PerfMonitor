@@ -1,0 +1,12 @@
+F:\Codex\FSim\src\FenixFpm.Contracts\bin\x64\Debug\net8.0\FenixFpm.Contracts.deps.json
+F:\Codex\FSim\src\FenixFpm.Contracts\bin\x64\Debug\net8.0\FenixFpm.Contracts.dll
+F:\Codex\FSim\src\FenixFpm.Contracts\bin\x64\Debug\net8.0\FenixFpm.Contracts.pdb
+F:\Codex\FSim\src\FenixFpm.Contracts\obj\x64\Debug\net8.0\FenixFpm.Contracts.GeneratedMSBuildEditorConfig.editorconfig
+F:\Codex\FSim\src\FenixFpm.Contracts\obj\x64\Debug\net8.0\FenixFpm.Contracts.AssemblyInfoInputs.cache
+F:\Codex\FSim\src\FenixFpm.Contracts\obj\x64\Debug\net8.0\FenixFpm.Contracts.AssemblyInfo.cs
+F:\Codex\FSim\src\FenixFpm.Contracts\obj\x64\Debug\net8.0\FenixFpm.Contracts.csproj.CoreCompileInputs.cache
+F:\Codex\FSim\src\FenixFpm.Contracts\obj\x64\Debug\net8.0\FenixFpm.Contracts.sourcelink.json
+F:\Codex\FSim\src\FenixFpm.Contracts\obj\x64\Debug\net8.0\FenixFpm.Contracts.dll
+F:\Codex\FSim\src\FenixFpm.Contracts\obj\x64\Debug\net8.0\refint\FenixFpm.Contracts.dll
+F:\Codex\FSim\src\FenixFpm.Contracts\obj\x64\Debug\net8.0\FenixFpm.Contracts.pdb
+F:\Codex\FSim\src\FenixFpm.Contracts\obj\x64\Debug\net8.0\ref\FenixFpm.Contracts.dll

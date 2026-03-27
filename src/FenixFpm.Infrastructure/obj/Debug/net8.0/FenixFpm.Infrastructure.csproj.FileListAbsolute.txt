@@ -1,0 +1,6 @@
+F:\Codex\FSim\src\FenixFpm.Infrastructure\obj\Debug\net8.0\FenixFpm.Infrastructure.csproj.AssemblyReference.cache
+F:\Codex\FSim\src\FenixFpm.Infrastructure\obj\Debug\net8.0\FenixFpm.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+F:\Codex\FSim\src\FenixFpm.Infrastructure\obj\Debug\net8.0\FenixFpm.Infrastructure.AssemblyInfoInputs.cache
+F:\Codex\FSim\src\FenixFpm.Infrastructure\obj\Debug\net8.0\FenixFpm.Infrastructure.AssemblyInfo.cs
+F:\Codex\FSim\src\FenixFpm.Infrastructure\obj\Debug\net8.0\FenixFpm.Infrastructure.csproj.CoreCompileInputs.cache
+F:\Codex\FSim\src\FenixFpm.Infrastructure\obj\Debug\net8.0\FenixFpm.Infrastructure.sourcelink.json

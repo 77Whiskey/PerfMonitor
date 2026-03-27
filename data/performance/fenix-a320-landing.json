@@ -1,0 +1,369 @@
+{
+    "aircraft":  "FenixA320",
+    "landingTables":  [
+                          {
+                              "runwayCondition":  "Dry",
+                              "weightsKg":  [
+                                                58000,
+                                                64000,
+                                                70000
+                                            ],
+                              "outsideAirTemperaturesC":  [
+                                                              -10,
+                                                              15,
+                                                              35
+                                                          ],
+                              "pressureAltitudesFeet":  [
+                                                            0,
+                                                            3000,
+                                                            6000
+                                                        ],
+                              "points":  [
+                                             {
+                                                 "weightKg":  58000,
+                                                 "outsideAirTemperatureC":  -10,
+                                                 "pressureAltitudeFeet":  0,
+                                                 "distanceMeters":  1125
+                                             },
+                                             {
+                                                 "weightKg":  58000,
+                                                 "outsideAirTemperatureC":  -10,
+                                                 "pressureAltitudeFeet":  3000,
+                                                 "distanceMeters":  1197
+                                             },
+                                             {
+                                                 "weightKg":  58000,
+                                                 "outsideAirTemperatureC":  -10,
+                                                 "pressureAltitudeFeet":  6000,
+                                                 "distanceMeters":  1269
+                                             },
+                                             {
+                                                 "weightKg":  58000,
+                                                 "outsideAirTemperatureC":  15,
+                                                 "pressureAltitudeFeet":  0,
+                                                 "distanceMeters":  1163
+                                             },
+                                             {
+                                                 "weightKg":  58000,
+                                                 "outsideAirTemperatureC":  15,
+                                                 "pressureAltitudeFeet":  3000,
+                                                 "distanceMeters":  1235
+                                             },
+                                             {
+                                                 "weightKg":  58000,
+                                                 "outsideAirTemperatureC":  15,
+                                                 "pressureAltitudeFeet":  6000,
+                                                 "distanceMeters":  1307
+                                             },
+                                             {
+                                                 "weightKg":  58000,
+                                                 "outsideAirTemperatureC":  35,
+                                                 "pressureAltitudeFeet":  0,
+                                                 "distanceMeters":  1201
+                                             },
+                                             {
+                                                 "weightKg":  58000,
+                                                 "outsideAirTemperatureC":  35,
+                                                 "pressureAltitudeFeet":  3000,
+                                                 "distanceMeters":  1273
+                                             },
+                                             {
+                                                 "weightKg":  58000,
+                                                 "outsideAirTemperatureC":  35,
+                                                 "pressureAltitudeFeet":  6000,
+                                                 "distanceMeters":  1345
+                                             },
+                                             {
+                                                 "weightKg":  64000,
+                                                 "outsideAirTemperatureC":  -10,
+                                                 "pressureAltitudeFeet":  0,
+                                                 "distanceMeters":  1240
+                                             },
+                                             {
+                                                 "weightKg":  64000,
+                                                 "outsideAirTemperatureC":  -10,
+                                                 "pressureAltitudeFeet":  3000,
+                                                 "distanceMeters":  1312
+                                             },
+                                             {
+                                                 "weightKg":  64000,
+                                                 "outsideAirTemperatureC":  -10,
+                                                 "pressureAltitudeFeet":  6000,
+                                                 "distanceMeters":  1384
+                                             },
+                                             {
+                                                 "weightKg":  64000,
+                                                 "outsideAirTemperatureC":  15,
+                                                 "pressureAltitudeFeet":  0,
+                                                 "distanceMeters":  1278
+                                             },
+                                             {
+                                                 "weightKg":  64000,
+                                                 "outsideAirTemperatureC":  15,
+                                                 "pressureAltitudeFeet":  3000,
+                                                 "distanceMeters":  1350
+                                             },
+                                             {
+                                                 "weightKg":  64000,
+                                                 "outsideAirTemperatureC":  15,
+                                                 "pressureAltitudeFeet":  6000,
+                                                 "distanceMeters":  1422
+                                             },
+                                             {
+                                                 "weightKg":  64000,
+                                                 "outsideAirTemperatureC":  35,
+                                                 "pressureAltitudeFeet":  0,
+                                                 "distanceMeters":  1316
+                                             },
+                                             {
+                                                 "weightKg":  64000,
+                                                 "outsideAirTemperatureC":  35,
+                                                 "pressureAltitudeFeet":  3000,
+                                                 "distanceMeters":  1388
+                                             },
+                                             {
+                                                 "weightKg":  64000,
+                                                 "outsideAirTemperatureC":  35,
+                                                 "pressureAltitudeFeet":  6000,
+                                                 "distanceMeters":  1460
+                                             },
+                                             {
+                                                 "weightKg":  70000,
+                                                 "outsideAirTemperatureC":  -10,
+                                                 "pressureAltitudeFeet":  0,
+                                                 "distanceMeters":  1355
+                                             },
+                                             {
+                                                 "weightKg":  70000,
+                                                 "outsideAirTemperatureC":  -10,
+                                                 "pressureAltitudeFeet":  3000,
+                                                 "distanceMeters":  1427
+                                             },
+                                             {
+                                                 "weightKg":  70000,
+                                                 "outsideAirTemperatureC":  -10,
+                                                 "pressureAltitudeFeet":  6000,
+                                                 "distanceMeters":  1499
+                                             },
+                                             {
+                                                 "weightKg":  70000,
+                                                 "outsideAirTemperatureC":  15,
+                                                 "pressureAltitudeFeet":  0,
+                                                 "distanceMeters":  1393
+                                             },
+                                             {
+                                                 "weightKg":  70000,
+                                                 "outsideAirTemperatureC":  15,
+                                                 "pressureAltitudeFeet":  3000,
+                                                 "distanceMeters":  1465
+                                             },
+                                             {
+                                                 "weightKg":  70000,
+                                                 "outsideAirTemperatureC":  15,
+                                                 "pressureAltitudeFeet":  6000,
+                                                 "distanceMeters":  1537
+                                             },
+                                             {
+                                                 "weightKg":  70000,
+                                                 "outsideAirTemperatureC":  35,
+                                                 "pressureAltitudeFeet":  0,
+                                                 "distanceMeters":  1431
+                                             },
+                                             {
+                                                 "weightKg":  70000,
+                                                 "outsideAirTemperatureC":  35,
+                                                 "pressureAltitudeFeet":  3000,
+                                                 "distanceMeters":  1503
+                                             },
+                                             {
+                                                 "weightKg":  70000,
+                                                 "outsideAirTemperatureC":  35,
+                                                 "pressureAltitudeFeet":  6000,
+                                                 "distanceMeters":  1575
+                                             }
+                                         ]
+                          },
+                          {
+                              "runwayCondition":  "Wet",
+                              "weightsKg":  [
+                                                58000,
+                                                64000,
+                                                70000
+                                            ],
+                              "outsideAirTemperaturesC":  [
+                                                              -10,
+                                                              15,
+                                                              35
+                                                          ],
+                              "pressureAltitudesFeet":  [
+                                                            0,
+                                                            3000,
+                                                            6000
+                                                        ],
+                              "points":  [
+                                             {
+                                                 "weightKg":  58000,
+                                                 "outsideAirTemperatureC":  -10,
+                                                 "pressureAltitudeFeet":  0,
+                                                 "distanceMeters":  1305
+                                             },
+                                             {
+                                                 "weightKg":  58000,
+                                                 "outsideAirTemperatureC":  -10,
+                                                 "pressureAltitudeFeet":  3000,
+                                                 "distanceMeters":  1377
+                                             },
+                                             {
+                                                 "weightKg":  58000,
+                                                 "outsideAirTemperatureC":  -10,
+                                                 "pressureAltitudeFeet":  6000,
+                                                 "distanceMeters":  1449
+                                             },
+                                             {
+                                                 "weightKg":  58000,
+                                                 "outsideAirTemperatureC":  15,
+                                                 "pressureAltitudeFeet":  0,
+                                                 "distanceMeters":  1343
+                                             },
+                                             {
+                                                 "weightKg":  58000,
+                                                 "outsideAirTemperatureC":  15,
+                                                 "pressureAltitudeFeet":  3000,
+                                                 "distanceMeters":  1415
+                                             },
+                                             {
+                                                 "weightKg":  58000,
+                                                 "outsideAirTemperatureC":  15,
+                                                 "pressureAltitudeFeet":  6000,
+                                                 "distanceMeters":  1487
+                                             },
+                                             {
+                                                 "weightKg":  58000,
+                                                 "outsideAirTemperatureC":  35,
+                                                 "pressureAltitudeFeet":  0,
+                                                 "distanceMeters":  1381
+                                             },
+                                             {
+                                                 "weightKg":  58000,
+                                                 "outsideAirTemperatureC":  35,
+                                                 "pressureAltitudeFeet":  3000,
+                                                 "distanceMeters":  1453
+                                             },
+                                             {
+                                                 "weightKg":  58000,
+                                                 "outsideAirTemperatureC":  35,
+                                                 "pressureAltitudeFeet":  6000,
+                                                 "distanceMeters":  1525
+                                             },
+                                             {
+                                                 "weightKg":  64000,
+                                                 "outsideAirTemperatureC":  -10,
+                                                 "pressureAltitudeFeet":  0,
+                                                 "distanceMeters":  1420
+                                             },
+                                             {
+                                                 "weightKg":  64000,
+                                                 "outsideAirTemperatureC":  -10,
+                                                 "pressureAltitudeFeet":  3000,
+                                                 "distanceMeters":  1492
+                                             },
+                                             {
+                                                 "weightKg":  64000,
+                                                 "outsideAirTemperatureC":  -10,
+                                                 "pressureAltitudeFeet":  6000,
+                                                 "distanceMeters":  1564
+                                             },
+                                             {
+                                                 "weightKg":  64000,
+                                                 "outsideAirTemperatureC":  15,
+                                                 "pressureAltitudeFeet":  0,
+                                                 "distanceMeters":  1458
+                                             },
+                                             {
+                                                 "weightKg":  64000,
+                                                 "outsideAirTemperatureC":  15,
+                                                 "pressureAltitudeFeet":  3000,
+                                                 "distanceMeters":  1530
+                                             },
+                                             {
+                                                 "weightKg":  64000,
+                                                 "outsideAirTemperatureC":  15,
+                                                 "pressureAltitudeFeet":  6000,
+                                                 "distanceMeters":  1602
+                                             },
+                                             {
+                                                 "weightKg":  64000,
+                                                 "outsideAirTemperatureC":  35,
+                                                 "pressureAltitudeFeet":  0,
+                                                 "distanceMeters":  1496
+                                             },
+                                             {
+                                                 "weightKg":  64000,
+                                                 "outsideAirTemperatureC":  35,
+                                                 "pressureAltitudeFeet":  3000,
+                                                 "distanceMeters":  1568
+                                             },
+                                             {
+                                                 "weightKg":  64000,
+                                                 "outsideAirTemperatureC":  35,
+                                                 "pressureAltitudeFeet":  6000,
+                                                 "distanceMeters":  1640
+                                             },
+                                             {
+                                                 "weightKg":  70000,
+                                                 "outsideAirTemperatureC":  -10,
+                                                 "pressureAltitudeFeet":  0,
+                                                 "distanceMeters":  1535
+                                             },
+                                             {
+                                                 "weightKg":  70000,
+                                                 "outsideAirTemperatureC":  -10,
+                                                 "pressureAltitudeFeet":  3000,
+                                                 "distanceMeters":  1607
+                                             },
+                                             {
+                                                 "weightKg":  70000,
+                                                 "outsideAirTemperatureC":  -10,
+                                                 "pressureAltitudeFeet":  6000,
+                                                 "distanceMeters":  1679
+                                             },
+                                             {
+                                                 "weightKg":  70000,
+                                                 "outsideAirTemperatureC":  15,
+                                                 "pressureAltitudeFeet":  0,
+                                                 "distanceMeters":  1573
+                                             },
+                                             {
+                                                 "weightKg":  70000,
+                                                 "outsideAirTemperatureC":  15,
+                                                 "pressureAltitudeFeet":  3000,
+                                                 "distanceMeters":  1645
+                                             },
+                                             {
+                                                 "weightKg":  70000,
+                                                 "outsideAirTemperatureC":  15,
+                                                 "pressureAltitudeFeet":  6000,
+                                                 "distanceMeters":  1717
+                                             },
+                                             {
+                                                 "weightKg":  70000,
+                                                 "outsideAirTemperatureC":  35,
+                                                 "pressureAltitudeFeet":  0,
+                                                 "distanceMeters":  1611
+                                             },
+                                             {
+                                                 "weightKg":  70000,
+                                                 "outsideAirTemperatureC":  35,
+                                                 "pressureAltitudeFeet":  3000,
+                                                 "distanceMeters":  1683
+                                             },
+                                             {
+                                                 "weightKg":  70000,
+                                                 "outsideAirTemperatureC":  35,
+                                                 "pressureAltitudeFeet":  6000,
+                                                 "distanceMeters":  1755
+                                             }
+                                         ]
+                          }
+                      ]
+}

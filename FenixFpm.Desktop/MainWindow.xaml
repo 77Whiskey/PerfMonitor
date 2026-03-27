@@ -1,0 +1,231 @@
+﻿<Window x:Class="FenixFpm.Desktop.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:FenixFpm.Desktop.ViewModels"
+        xmlns:views="clr-namespace:FenixFpm.Desktop.Views"
+        mc:Ignorable="d"
+        Title="Fenix A320 Flight Performance Monitor"
+        Height="800" Width="1400"
+        MinHeight="600" MinWidth="1200"
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource BackgroundPrimaryBrush}">
+
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type vm:PreflightViewModel}">
+            <views:PreflightView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:TakeoffViewModel}">
+            <views:TakeoffView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:ClimbCruiseViewModel}">
+            <views:ClimbCruiseView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:ApproachViewModel}">
+            <views:ApproachView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:LandingViewModel}">
+            <views:LandingView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:DebriefViewModel}">
+            <views:DebriefView/>
+        </DataTemplate>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="220"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Column="0" Background="{StaticResource BackgroundSecondaryBrush}"
+                BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,0,1,0">
+            <DockPanel>
+                <StackPanel DockPanel.Dock="Top" Margin="16">
+                    <TextBlock Text="Fenix A320" FontSize="20" FontWeight="Bold"
+                               Foreground="{StaticResource TextPrimaryBrush}"/>
+                    <TextBlock Text="Flight Performance Monitor" FontSize="11"
+                               Foreground="{StaticResource TextMutedBrush}" Margin="0,4,0,0"/>
+                </StackPanel>
+
+                <StackPanel DockPanel.Dock="Top" Margin="0,16,0,0">
+                    <Button Content="Preflight &amp; Taxi" Command="{Binding NavigateToPreflightCommand}"
+                            Style="{StaticResource NavigationButtonStyle}"/>
+                    <Button Content="Takeoff" Command="{Binding NavigateToTakeoffCommand}"
+                            Style="{StaticResource NavigationButtonStyle}"/>
+                    <Button Content="Climb &amp; Cruise" Command="{Binding NavigateToClimbCruiseCommand}"
+                            Style="{StaticResource NavigationButtonStyle}"/>
+                    <Button Content="Approach" Command="{Binding NavigateToApproachCommand}"
+                            Style="{StaticResource NavigationButtonStyle}"/>
+                    <Button Content="Landing &amp; Rollout" Command="{Binding NavigateToLandingCommand}"
+                            Style="{StaticResource NavigationButtonStyle}"/>
+                    <Button Content="Post-Flight Debrief" Command="{Binding NavigateToDebriefCommand}"
+                            Style="{StaticResource NavigationButtonStyle}"/>
+                </StackPanel>
+
+                <Border DockPanel.Dock="Bottom" Margin="16" Style="{StaticResource CardStyle}">
+                    <StackPanel>
+                        <TextBlock Text="FLIGHT STATUS" Style="{StaticResource SectionHeaderStyle}"/>
+                        <TextBlock Text="{Binding ActiveFlight.FlightPhase}" FontSize="18" FontWeight="SemiBold"
+                                   Foreground="{StaticResource PrimaryAccentBrush}"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                            <Ellipse Width="8" Height="8" Margin="0,0,6,0">
+                                <Ellipse.Style>
+                                    <Style TargetType="Ellipse">
+                                        <Setter Property="Fill" Value="{StaticResource ErrorBrush}"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ActiveFlight.IsConnected}" Value="True">
+                                                <Setter Property="Fill" Value="{StaticResource SuccessBrush}"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Ellipse.Style>
+                            </Ellipse>
+                            <TextBlock Foreground="{StaticResource TextMutedBrush}" FontSize="11">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Text" Value="Disconnected"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ActiveFlight.IsConnected}" Value="True">
+                                                <Setter Property="Text" Value="Connected"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <ScrollViewer VerticalScrollBarVisibility="Disabled"/>
+            </DockPanel>
+        </Border>
+
+        <Grid Grid.Column="1" Margin="24">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,24">
+                <TextBlock Text="{Binding CurrentView}" FontSize="28" FontWeight="Bold"
+                           Foreground="{StaticResource TextPrimaryBrush}"/>
+            </StackPanel>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="320"/>
+                </Grid.ColumnDefinitions>
+
+                <ContentControl Grid.Column="0" Content="{Binding CurrentViewModel}" Margin="0,0,16,0"/>
+
+                <Border Grid.Column="1" Style="{StaticResource CardStyle}">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <StackPanel>
+                            <TextBlock Text="TELEMETRY" Style="{StaticResource SectionHeaderStyle}"/>
+
+                            <StackPanel Margin="0,0,0,16">
+                                <TextBlock Style="{StaticResource MetricValueStyle}">
+                                    <Run Text="{Binding ActiveFlight.IndicatedAirspeedKnots, StringFormat='{}{0:F0}'}"/>
+                                    <Run Text="kts" FontSize="14" Foreground="{StaticResource TextMutedBrush}"/>
+                                </TextBlock>
+                                <TextBlock Text="Airspeed (IAS)" Style="{StaticResource MetricLabelStyle}"/>
+                            </StackPanel>
+
+                            <StackPanel Margin="0,0,0,16">
+                                <TextBlock Style="{StaticResource MetricValueStyle}">
+                                    <Run Text="{Binding ActiveFlight.BaroAltitudeFeet, StringFormat='{}{0:F0}'}"/>
+                                    <Run Text="ft" FontSize="14" Foreground="{StaticResource TextMutedBrush}"/>
+                                </TextBlock>
+                                <TextBlock Text="Altitude (Baro)" Style="{StaticResource MetricLabelStyle}"/>
+                            </StackPanel>
+
+                            <StackPanel Margin="0,0,0,16">
+                                <TextBlock Style="{StaticResource MetricValueStyle}">
+                                    <Run Text="{Binding ActiveFlight.VerticalSpeedFpm, StringFormat='{}{0:F0}'}"/>
+                                    <Run Text="fpm" FontSize="14" Foreground="{StaticResource TextMutedBrush}"/>
+                                </TextBlock>
+                                <TextBlock Text="Vertical Speed" Style="{StaticResource MetricLabelStyle}"/>
+                            </StackPanel>
+
+                            <StackPanel Margin="0,0,0,16">
+                                <TextBlock Style="{StaticResource MetricValueStyle}">
+                                    <Run Text="{Binding ActiveFlight.GroundSpeedKnots, StringFormat='{}{0:F0}'}"/>
+                                    <Run Text="kts" FontSize="14" Foreground="{StaticResource TextMutedBrush}"/>
+                                </TextBlock>
+                                <TextBlock Text="Ground Speed" Style="{StaticResource MetricLabelStyle}"/>
+                            </StackPanel>
+
+                            <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,1,0,0" Margin="0,8,0,16"/>
+
+                            <StackPanel Margin="0,0,0,8">
+                                <TextBlock Text="AUTOPILOT" Style="{StaticResource SectionHeaderStyle}"/>
+                            </StackPanel>
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <StackPanel Grid.Column="0" Grid.Row="0" Margin="0,0,0,12">
+                                    <TextBlock Text="{Binding ActiveFlight.LateralMode}" FontSize="16" FontWeight="SemiBold"
+                                               Foreground="{StaticResource TextPrimaryBrush}"/>
+                                    <TextBlock Text="Lateral Mode" FontSize="10" Foreground="{StaticResource TextMutedBrush}"/>
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="1" Grid.Row="0" Margin="0,0,0,12">
+                                    <TextBlock Text="{Binding ActiveFlight.VerticalMode}" FontSize="16" FontWeight="SemiBold"
+                                               Foreground="{StaticResource TextPrimaryBrush}"/>
+                                    <TextBlock Text="Vertical Mode" FontSize="10" Foreground="{StaticResource TextMutedBrush}"/>
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="0" Grid.Row="1">
+                                    <TextBlock FontSize="14" Foreground="{StaticResource TextPrimaryBrush}">
+                                        <Run Text="A/T: "/>
+                                        <Run Text="{Binding ActiveFlight.AutothrustActive, Converter={StaticResource BoolConverter}}"/>
+                                    </TextBlock>
+                                    <TextBlock Text="Autothrust" FontSize="10" Foreground="{StaticResource TextMutedBrush}"/>
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="1" Grid.Row="1">
+                                    <TextBlock FontSize="14" Foreground="{StaticResource TextPrimaryBrush}">
+                                        <Run Text="SPD: "/>
+                                        <Run Text="{Binding ActiveFlight.ManagedSpeedActive, Converter={StaticResource BoolConverter}}"/>
+                                    </TextBlock>
+                                    <TextBlock Text="Managed Speed" FontSize="10" Foreground="{StaticResource TextMutedBrush}"/>
+                                </StackPanel>
+                            </Grid>
+
+                            <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,1,0,0" Margin="0,8,0,16"/>
+
+                            <StackPanel Margin="0,0,0,8">
+                                <TextBlock Text="EVENTS" Style="{StaticResource SectionHeaderStyle}"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <Border Background="{StaticResource ErrorBrush}" CornerRadius="4" Padding="8,4" Margin="0,0,8,0">
+                                        <TextBlock Foreground="White" FontSize="12">
+                                            <Run Text="{Binding ActiveFlight.WarningCount}"/>
+                                            <Run Text=" Warnings"/>
+                                        </TextBlock>
+                                    </Border>
+                                    <Border Background="{StaticResource WarningBrush}" CornerRadius="4" Padding="8,4">
+                                        <TextBlock Foreground="White" FontSize="12">
+                                            <Run Text="{Binding ActiveFlight.AdvisoryCount}"/>
+                                            <Run Text=" Advisories"/>
+                                        </TextBlock>
+                                    </Border>
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Border>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

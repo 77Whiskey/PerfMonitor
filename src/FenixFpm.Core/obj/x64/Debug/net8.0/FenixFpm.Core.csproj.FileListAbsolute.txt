@@ -1,0 +1,12 @@
+F:\Codex\FSim\src\FenixFpm.Core\bin\x64\Debug\net8.0\FenixFpm.Core.deps.json
+F:\Codex\FSim\src\FenixFpm.Core\bin\x64\Debug\net8.0\FenixFpm.Core.dll
+F:\Codex\FSim\src\FenixFpm.Core\bin\x64\Debug\net8.0\FenixFpm.Core.pdb
+F:\Codex\FSim\src\FenixFpm.Core\obj\x64\Debug\net8.0\FenixFpm.Core.GeneratedMSBuildEditorConfig.editorconfig
+F:\Codex\FSim\src\FenixFpm.Core\obj\x64\Debug\net8.0\FenixFpm.Core.AssemblyInfoInputs.cache
+F:\Codex\FSim\src\FenixFpm.Core\obj\x64\Debug\net8.0\FenixFpm.Core.AssemblyInfo.cs
+F:\Codex\FSim\src\FenixFpm.Core\obj\x64\Debug\net8.0\FenixFpm.Core.csproj.CoreCompileInputs.cache
+F:\Codex\FSim\src\FenixFpm.Core\obj\x64\Debug\net8.0\FenixFpm.Core.sourcelink.json
+F:\Codex\FSim\src\FenixFpm.Core\obj\x64\Debug\net8.0\FenixFpm.Core.dll
+F:\Codex\FSim\src\FenixFpm.Core\obj\x64\Debug\net8.0\refint\FenixFpm.Core.dll
+F:\Codex\FSim\src\FenixFpm.Core\obj\x64\Debug\net8.0\FenixFpm.Core.pdb
+F:\Codex\FSim\src\FenixFpm.Core\obj\x64\Debug\net8.0\ref\FenixFpm.Core.dll

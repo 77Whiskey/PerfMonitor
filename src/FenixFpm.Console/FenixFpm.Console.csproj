@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FenixFpm.Core\FenixFpm.Core.csproj" />
+    <ProjectReference Include="..\FenixFpm.Infrastructure\FenixFpm.Infrastructure.csproj" />
+    <ProjectReference Include="..\FenixFpm.Contracts\FenixFpm.Contracts.csproj" />
+  </ItemGroup>
+</Project>
