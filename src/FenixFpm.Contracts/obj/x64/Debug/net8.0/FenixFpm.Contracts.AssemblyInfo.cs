@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FenixFpm.Contracts")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+13a3c3c15628fa7ac750bf12ff5a9f83cbba077f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+74f6a6f85c0ff13f8c7ac2fa16d4a262a11cedfb")]
 [assembly: System.Reflection.AssemblyProductAttribute("FenixFpm.Contracts")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FenixFpm.Contracts")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

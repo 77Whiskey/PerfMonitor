@@ -1,3 +1,4 @@
+#define NOMINMAX
 #include <MSFS/MSFS_WindowsTypes.h>
 #include <MSFS/Legacy/gauges.h>
 #include <SimConnect.h>
@@ -665,12 +666,12 @@ extern "C" DECLSPEC_EXPORT GaugesImportTable ImportTable =
     { 0x00000000, 0 }
 };
 
-extern "C" void FSAPI module_init(void)
+extern "C" MSFS_CALLBACK void module_init(void)
 {
     TryInitializeSimConnect(true);
 }
 
-extern "C" void FSAPI module_deinit(void)
+extern "C" MSFS_CALLBACK void module_deinit(void)
 {
     if (g_hSimConnect != 0)
     {
@@ -683,7 +684,19 @@ extern "C" void FSAPI module_deinit(void)
     unregister_all_named_vars();
 }
 
-extern "C" BOOL WINAPI DllMain(HINSTANCE hDll, DWORD reason, LPVOID reserved)
+extern "C" __declspec(dllexport) void* FSAPI module_get_var(int var_id)
+{
+    (void)var_id;
+    return NULL;
+}
+
+extern "C" __declspec(dllexport) void* FSAPI module_get_event(int event_id)
+{
+    (void)event_id;
+    return NULL;
+}
+
+BOOL DllMain(HINSTANCE hDll, DWORD reason, LPVOID reserved)
 {
     (void)hDll;
     (void)reason;
@@ -691,7 +704,7 @@ extern "C" BOOL WINAPI DllMain(HINSTANCE hDll, DWORD reason, LPVOID reserved)
     return TRUE;
 }
 
-extern "C" DECLSPEC_EXPORT GAUGESLINKAGE Linkage =
+GAUGESLINKAGE Linkage =
 {
     GaugeModuleId,
     module_init,
@@ -701,3 +714,6 @@ extern "C" DECLSPEC_EXPORT GAUGESLINKAGE Linkage =
     FS9LINK_VERSION,
     { &g_gaugeHeader, 0 }
 };
+
+
+
