@@ -27,43 +27,7 @@ public partial class App : Application
     protected override void OnStartup(StartupEventArgs e)
     {
         var builder = Host.CreateApplicationBuilder();
-
-        builder.Services.AddDbContextFactory<FenixTelemetryDbContext>(options =>
-            options.UseSqlite("Data Source=fenix_telemetry.db"));
-
-        builder.Services.AddSingleton<IFlightSessionService, FlightSessionService>();
-        builder.Services.AddSingleton<AnalyticsService>();
-        builder.Services.AddSingleton<IAnalyticsService>(sp => sp.GetRequiredService<AnalyticsService>());
-        builder.Services.AddSingleton<IDebriefService, DebriefService>();
-        builder.Services.AddSingleton<IPerformanceDataService, PerformanceDataService>();
-        builder.Services.AddSingleton(LoadSopConfiguration());
-
-        builder.Services.AddSingleton<IAirbusModule>(sp =>
-            new StabilizedApproachModule(sp.GetRequiredService<SopConfiguration>()));
-        builder.Services.AddSingleton<IAirbusModule, AutobrakeMonitorModule>();
-        builder.Services.AddSingleton(sp =>
-            new PerformanceEngine(sp.GetServices<IAirbusModule>()));
-
-        builder.Services.AddSingleton<Channel<FenixFpmSharedBuffer>>(_ =>
-            Channel.CreateUnbounded<FenixFpmSharedBuffer>(
-                new UnboundedChannelOptions { SingleReader = true, SingleWriter = false }));
-
-        builder.Services.AddSingleton(sp =>
-            new FenixSharedMemoryReader(snapshotChannel: sp.GetRequiredService<Channel<FenixFpmSharedBuffer>>()));
-
-        builder.Services.AddSingleton<TelemetryIngestionWorker>();
-        builder.Services.AddHostedService(sp => sp.GetRequiredService<TelemetryIngestionWorker>());
-
-        builder.Services.AddSingleton<ActiveFlightViewModel>();
-        builder.Services.AddTransient<MainViewModel>();
-        builder.Services.AddTransient<PreflightViewModel>();
-        builder.Services.AddTransient<TakeoffViewModel>();
-        builder.Services.AddTransient<ClimbCruiseViewModel>();
-        builder.Services.AddTransient<ApproachViewModel>();
-        builder.Services.AddTransient<LandingViewModel>();
-        builder.Services.AddTransient<DebriefViewModel>();
-
-        builder.Services.AddSingleton<MainWindow>();
+        ConfigureServices(builder.Services);
 
         _host = builder.Build();
         Services = _host.Services;
@@ -94,19 +58,6 @@ public partial class App : Application
             LogException(ex);
         }
 
-        try
-        {
-            Services.GetRequiredService<FenixSharedMemoryReader>()
-                .InitializeAsync()
-                .AsTask()
-                .GetAwaiter()
-                .GetResult();
-        }
-        catch (Exception ex)
-        {
-            LogException(ex);
-        }
-
         var mainWindow = Services.GetRequiredService<MainWindow>();
         mainWindow.Show();
 
@@ -130,6 +81,47 @@ public partial class App : Application
         }
 
         base.OnExit(e);
+    }
+
+    private static void ConfigureServices(IServiceCollection services)
+    {
+        services.AddDbContextFactory<FenixTelemetryDbContext>(options =>
+            options.UseSqlite("Data Source=fenix_telemetry.db"));
+
+        services.AddSingleton<IFlightSessionService, FlightSessionService>();
+        services.AddSingleton<AnalyticsService>();
+        services.AddSingleton<IAnalyticsService>(sp => sp.GetRequiredService<AnalyticsService>());
+        services.AddSingleton<IDebriefService, DebriefService>();
+        services.AddSingleton<IPerformanceDataService, PerformanceDataService>();
+        services.AddSingleton(LoadSopConfiguration());
+
+        services.AddSingleton<IAirbusModule>(sp =>
+            new StabilizedApproachModule(sp.GetRequiredService<SopConfiguration>()));
+        services.AddSingleton<IAirbusModule, AutobrakeMonitorModule>();
+        services.AddSingleton(sp =>
+            new PerformanceEngine(sp.GetServices<IAirbusModule>()));
+
+        services.AddSingleton<Channel<FenixFpmSharedBuffer>>(_ =>
+            Channel.CreateUnbounded<FenixFpmSharedBuffer>(
+                new UnboundedChannelOptions { SingleReader = true, SingleWriter = false }));
+
+        services.AddSingleton<FenixSharedMemoryReader>();
+        services.AddHostedService<FenixSharedMemoryReader>(provider => provider.GetRequiredService<FenixSharedMemoryReader>());
+        services.AddSingleton<ISimConnectService>(provider => provider.GetRequiredService<FenixSharedMemoryReader>());
+
+        services.AddSingleton<TelemetryIngestionWorker>();
+        services.AddHostedService(provider => provider.GetRequiredService<TelemetryIngestionWorker>());
+
+        services.AddSingleton<ActiveFlightViewModel>();
+        services.AddTransient<MainViewModel>();
+        services.AddTransient<PreflightViewModel>();
+        services.AddTransient<TakeoffViewModel>();
+        services.AddTransient<ClimbCruiseViewModel>();
+        services.AddTransient<ApproachViewModel>();
+        services.AddTransient<LandingViewModel>();
+        services.AddTransient<DebriefViewModel>();
+
+        services.AddSingleton<MainWindow>();
     }
 
     private static SopConfiguration LoadSopConfiguration()

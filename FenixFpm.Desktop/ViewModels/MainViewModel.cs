@@ -1,18 +1,13 @@
+using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using FenixFpm.Core.Abstractions;
 
 namespace FenixFpm.Desktop.ViewModels;
 
 public partial class MainViewModel : ObservableObject
 {
-    [ObservableProperty]
-    private string _currentView = "Preflight & Taxi";
-
-    [ObservableProperty]
-    private object? _currentViewModel;
-
-    public ActiveFlightViewModel ActiveFlight { get; }
-
+    private readonly ISimConnectService _simConnectService;
     private readonly PreflightViewModel _preflightViewModel;
     private readonly TakeoffViewModel _takeoffViewModel;
     private readonly ClimbCruiseViewModel _climbCruiseViewModel;
@@ -20,8 +15,23 @@ public partial class MainViewModel : ObservableObject
     private readonly LandingViewModel _landingViewModel;
     private readonly DebriefViewModel _debriefViewModel;
 
+    [ObservableProperty]
+    private string _currentView = "Preflight & Taxi";
+
+    [ObservableProperty]
+    private object? _currentViewModel;
+
+    [ObservableProperty]
+    private bool _isConnected;
+
+    [ObservableProperty]
+    private string _connectionStatus = "Disconnected";
+
+    public ActiveFlightViewModel ActiveFlight { get; }
+
     public MainViewModel(
         ActiveFlightViewModel activeFlight,
+        ISimConnectService simConnectService,
         PreflightViewModel preflightViewModel,
         TakeoffViewModel takeoffViewModel,
         ClimbCruiseViewModel climbCruiseViewModel,
@@ -30,12 +40,17 @@ public partial class MainViewModel : ObservableObject
         DebriefViewModel debriefViewModel)
     {
         ActiveFlight = activeFlight;
+        _simConnectService = simConnectService;
         _preflightViewModel = preflightViewModel;
         _takeoffViewModel = takeoffViewModel;
         _climbCruiseViewModel = climbCruiseViewModel;
         _approachViewModel = approachViewModel;
         _landingViewModel = landingViewModel;
         _debriefViewModel = debriefViewModel;
+
+        IsConnected = _simConnectService.IsConnected;
+        ConnectionStatus = _simConnectService.ConnectionStatus;
+        _simConnectService.ConnectionStateChanged += OnConnectionStateChanged;
 
         ShowView("Preflight & Taxi", _preflightViewModel);
     }
@@ -60,6 +75,21 @@ public partial class MainViewModel : ObservableObject
     {
         await _debriefViewModel.LoadLatestSessionAsync();
         ShowView("Post-Flight Debrief", _debriefViewModel);
+    }
+
+    [RelayCommand]
+    private void ConnectToSim()
+    {
+        _simConnectService.ForceConnect();
+    }
+
+    private void OnConnectionStateChanged()
+    {
+        Application.Current.Dispatcher.Invoke(() =>
+        {
+            IsConnected = _simConnectService.IsConnected;
+            ConnectionStatus = _simConnectService.ConnectionStatus;
+        });
     }
 
     private void ShowView(string title, object viewModel)

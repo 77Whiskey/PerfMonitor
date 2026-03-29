@@ -1,4 +1,4 @@
-﻿<Window x:Class="FenixFpm.Desktop.MainWindow"
+<Window x:Class="FenixFpm.Desktop.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -73,27 +73,18 @@
                             <Ellipse Width="8" Height="8" Margin="0,0,6,0">
                                 <Ellipse.Style>
                                     <Style TargetType="Ellipse">
-                                        <Setter Property="Fill" Value="{StaticResource ErrorBrush}"/>
+                                        <Setter Property="Fill" Value="Red"/>
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding ActiveFlight.IsConnected}" Value="True">
-                                                <Setter Property="Fill" Value="{StaticResource SuccessBrush}"/>
+                                            <DataTrigger Binding="{Binding IsConnected}" Value="True">
+                                                <Setter Property="Fill" Value="LimeGreen"/>
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </Ellipse.Style>
                             </Ellipse>
-                            <TextBlock Foreground="{StaticResource TextMutedBrush}" FontSize="11">
-                                <TextBlock.Style>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="Text" Value="Disconnected"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding ActiveFlight.IsConnected}" Value="True">
-                                                <Setter Property="Text" Value="Connected"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
+                            <TextBlock Text="{Binding ConnectionStatus}"
+                                       Foreground="{StaticResource TextMutedBrush}"
+                                       FontSize="11"/>
                         </StackPanel>
                     </StackPanel>
                 </Border>
@@ -108,10 +99,52 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,24">
-                <TextBlock Text="{Binding CurrentView}" FontSize="28" FontWeight="Bold"
-                           Foreground="{StaticResource TextPrimaryBrush}"/>
-            </StackPanel>
+            <Grid Grid.Row="0" Margin="0,0,0,24">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0"
+                           Text="{Binding CurrentView}"
+                           FontSize="28"
+                           FontWeight="Bold"
+                           Foreground="{StaticResource TextPrimaryBrush}"
+                           VerticalAlignment="Center"/>
+
+                <StackPanel Grid.Column="1"
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center">
+                    <Ellipse Width="12" Height="12" Margin="0,0,10,0">
+                        <Ellipse.Style>
+                            <Style TargetType="Ellipse">
+                                <Setter Property="Fill" Value="Red"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsConnected}" Value="True">
+                                        <Setter Property="Fill" Value="LimeGreen"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Ellipse.Style>
+                    </Ellipse>
+
+                    <TextBlock Text="{Binding ConnectionStatus}"
+                               Margin="0,0,15,0"
+                               VerticalAlignment="Center"
+                               Foreground="{StaticResource TextPrimaryBrush}"/>
+
+                    <Button Content="CONNECT TO SIM"
+                            Command="{Binding ConnectToSimCommand}"
+                            Padding="16,8"
+                            FontWeight="SemiBold"
+                            Foreground="White"
+                            Background="{StaticResource PrimaryAccentBrush}"
+                            BorderBrush="{StaticResource PrimaryAccentBrush}"
+                            BorderThickness="1"
+                            Cursor="Hand"/>
+                </StackPanel>
+            </Grid>
 
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>

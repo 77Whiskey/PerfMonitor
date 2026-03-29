@@ -1,26 +1,28 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.IO;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 using FenixFpm.Contracts.Interop;
+using FenixFpm.Core.Abstractions;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.FlightSimulator.SimConnect;
 
 namespace FenixFpm.Infrastructure.SharedMemory;
 
-public sealed class FenixSharedMemoryReader : BackgroundService, IAsyncDisposable
+public sealed class FenixSharedMemoryReader : BackgroundService, IAsyncDisposable, ISimConnectService
 {
     private const string DefaultClientDataName = "FENIX_FPM_DATA";
     private const int MaxClientDataPayloadSize = 4096;
-    private static readonly TimeSpan ReconnectDelay = TimeSpan.FromSeconds(5);
 
     private readonly string _clientDataName;
     private readonly object _connectionSync = new();
     private readonly object _snapshotSync = new();
+    private readonly object _logSync = new();
     private readonly Channel<FenixFpmSharedBuffer> _snapshotChannel;
 
     private SimConnect? _simConnect;
@@ -29,9 +31,18 @@ public sealed class FenixSharedMemoryReader : BackgroundService, IAsyncDisposabl
     private int _startRequested;
     private int _channelCompleted;
 
-    public FenixSharedMemoryReader(
-        string clientDataName = DefaultClientDataName,
-        Channel<FenixFpmSharedBuffer>? snapshotChannel = null)
+    [ActivatorUtilitiesConstructor]
+    public FenixSharedMemoryReader(Channel<FenixFpmSharedBuffer> snapshotChannel)
+        : this(DefaultClientDataName, snapshotChannel)
+    {
+    }
+
+    public FenixSharedMemoryReader(string clientDataName = DefaultClientDataName)
+        : this(clientDataName, null)
+    {
+    }
+
+    private FenixSharedMemoryReader(string clientDataName, Channel<FenixFpmSharedBuffer>? snapshotChannel)
     {
         if (!string.IsNullOrWhiteSpace(clientDataName) &&
             !string.Equals(clientDataName, DefaultClientDataName, StringComparison.Ordinal))
@@ -44,9 +55,22 @@ public sealed class FenixSharedMemoryReader : BackgroundService, IAsyncDisposabl
         _clientDataName = DefaultClientDataName;
         _snapshotChannel = snapshotChannel ?? Channel.CreateUnbounded<FenixFpmSharedBuffer>(
             new UnboundedChannelOptions { SingleReader = false, SingleWriter = true });
+        ConnectionStatus = "Disconnected";
     }
 
+    public bool IsConnected { get; private set; }
+
+    public string ConnectionStatus { get; private set; }
+
+    public event Action ConnectionStateChanged = delegate { };
+
     public Channel<FenixFpmSharedBuffer> SnapshotChannel => _snapshotChannel;
+
+    public override Task StartAsync(CancellationToken cancellationToken)
+    {
+        Interlocked.Exchange(ref _startRequested, 1);
+        return base.StartAsync(cancellationToken);
+    }
 
     public ValueTask InitializeAsync(CancellationToken cancellationToken = default)
     {
@@ -56,6 +80,56 @@ public sealed class FenixSharedMemoryReader : BackgroundService, IAsyncDisposabl
         }
 
         return new ValueTask(StartAsync(cancellationToken));
+    }
+
+    public void ForceConnect()
+    {
+        ValidateBufferSize();
+        SetConnectionState(false, "Connecting...");
+        DisposeSimConnect(DetachCurrentConnection());
+
+        SimConnect? simConnect = null;
+
+        try
+        {
+            simConnect = new SimConnect("FenixFpmReader", IntPtr.Zero, 0, null, 0);
+            simConnect.OnRecvClientData += OnRecvClientData;
+            simConnect.OnRecvQuit += OnRecvQuit;
+
+            var clientDataSize = (uint)Marshal.SizeOf<FenixFpmSharedBuffer>();
+            simConnect.MapClientDataNameToID(_clientDataName, ClientDataAreaId.FenixFpm);
+            simConnect.AddToClientDataDefinition(ClientDataDefinition.Buffer, 0, clientDataSize, 0, 0);
+            simConnect.RegisterStruct<SIMCONNECT_RECV_CLIENT_DATA, SimConnectClientDataPayload>(ClientDataDefinition.Buffer);
+            simConnect.RequestClientData(
+                ClientDataAreaId.FenixFpm,
+                ClientDataRequest.Stream,
+                ClientDataDefinition.Buffer,
+                SIMCONNECT_CLIENT_DATA_PERIOD.VISUAL_FRAME,
+                SIMCONNECT_CLIENT_DATA_REQUEST_FLAG.CHANGED,
+                0,
+                0,
+                0);
+
+            lock (_connectionSync)
+            {
+                _simConnect = simConnect;
+            }
+
+            LogToFile("Connected to MSFS SimConnect client data stream.");
+            SetConnectionState(true, "Connected to MSFS");
+        }
+        catch (COMException ex)
+        {
+            LogToFile($"ForceConnect COMException: 0x{ex.ErrorCode:X8} {ex.Message}");
+            CleanupFailedConnection(simConnect);
+            SetConnectionState(false, $"Connect failed: {ex.Message}");
+        }
+        catch (Exception ex)
+        {
+            LogToFile($"ForceConnect Error: {ex}");
+            CleanupFailedConnection(simConnect);
+            SetConnectionState(false, $"Connect failed: {ex.Message}");
+        }
     }
 
     public bool TryRead(out FenixFpmSharedBuffer snapshot)
@@ -74,6 +148,11 @@ public sealed class FenixSharedMemoryReader : BackgroundService, IAsyncDisposabl
         _ = pollInterval;
         await InitializeAsync(cancellationToken).ConfigureAwait(false);
 
+        if (!IsConnected)
+        {
+            ForceConnect();
+        }
+
         await foreach (var snapshot in _snapshotChannel.Reader.ReadAllAsync(cancellationToken).ConfigureAwait(false))
         {
             yield return snapshot;
@@ -83,45 +162,50 @@ public sealed class FenixSharedMemoryReader : BackgroundService, IAsyncDisposabl
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         ValidateBufferSize();
+        LogToFile("SimConnect background pump started.");
 
         while (!stoppingToken.IsCancellationRequested)
         {
-            try
+            SimConnect? simConnect = null;
+
+            lock (_connectionSync)
             {
-                var simConnect = ConnectSimConnect();
-                await RunDispatchLoopAsync(simConnect, stoppingToken).ConfigureAwait(false);
+                if (IsConnected && _simConnect != null)
+                {
+                    simConnect = _simConnect;
+                }
             }
-            catch (COMException ex) when (!stoppingToken.IsCancellationRequested)
+
+            if (IsConnected && simConnect != null)
             {
-                Trace.TraceWarning($"[SimConnect] Unable to connect to MSFS or client data stream. Retrying in {ReconnectDelay.TotalSeconds:F0}s. {ex.Message}");
-                DisconnectSimConnect();
-                await Task.Delay(ReconnectDelay, stoppingToken).ConfigureAwait(false);
+                try
+                {
+                    simConnect.ReceiveMessage();
+                }
+                catch (Exception ex)
+                {
+                    LogToFile($"Pump Error: {ex.Message}");
+                    Disconnect("Disconnected - pump error");
+                }
             }
-            catch (OperationCanceledException) when (stoppingToken.IsCancellationRequested)
-            {
-                break;
-            }
-            catch (Exception ex) when (!stoppingToken.IsCancellationRequested)
-            {
-                Trace.TraceWarning($"[SimConnect] Reader loop failed unexpectedly. Retrying in {ReconnectDelay.TotalSeconds:F0}s. {ex.Message}");
-                DisconnectSimConnect();
-                await Task.Delay(ReconnectDelay, stoppingToken).ConfigureAwait(false);
-            }
+
+            await Task.Delay(16, stoppingToken).ConfigureAwait(false);
         }
 
-        DisconnectSimConnect();
+        LogToFile("SimConnect background pump stopping.");
+        Disconnect("Disconnected");
     }
 
     public override async Task StopAsync(CancellationToken cancellationToken)
     {
-        DisconnectSimConnect();
+        Disconnect("Disconnected");
         await base.StopAsync(cancellationToken).ConfigureAwait(false);
         CompleteChannel();
     }
 
     public override void Dispose()
     {
-        DisconnectSimConnect();
+        Disconnect("Disconnected");
         CompleteChannel();
         base.Dispose();
     }
@@ -143,72 +227,63 @@ public sealed class FenixSharedMemoryReader : BackgroundService, IAsyncDisposabl
         GC.SuppressFinalize(this);
     }
 
-    private SimConnect ConnectSimConnect()
+    private void LogToFile(string msg)
     {
-        var clientDataSize = (uint)Marshal.SizeOf<FenixFpmSharedBuffer>();
-        var simConnect = new SimConnect("FenixFpmReader", IntPtr.Zero, 0, null, 0);
-
         try
         {
-            simConnect.OnRecvClientData += OnRecvClientData;
-            simConnect.OnRecvQuit += OnRecvQuit;
-            simConnect.MapClientDataNameToID(_clientDataName, ClientDataAreaId.FenixFpm);
-            simConnect.AddToClientDataDefinition(ClientDataDefinition.Buffer, 0, clientDataSize, 0, 0);
-            simConnect.RegisterStruct<SIMCONNECT_RECV_CLIENT_DATA, SimConnectClientDataPayload>(ClientDataDefinition.Buffer);
-            simConnect.RequestClientData(
-                ClientDataAreaId.FenixFpm,
-                ClientDataRequest.Stream,
-                ClientDataDefinition.Buffer,
-                SIMCONNECT_CLIENT_DATA_PERIOD.VISUAL_FRAME,
-                SIMCONNECT_CLIENT_DATA_REQUEST_FLAG.CHANGED,
-                0,
-                0,
-                0);
-
-            lock (_connectionSync)
+            lock (_logSync)
             {
-                _simConnect = simConnect;
+                File.AppendAllText("SimConnect_Log.txt", $"{DateTime.Now:HH:mm:ss}: {msg}\n");
             }
-
-            return simConnect;
         }
         catch
         {
-            simConnect.OnRecvClientData -= OnRecvClientData;
-            simConnect.OnRecvQuit -= OnRecvQuit;
-            simConnect.Dispose();
-            throw;
         }
     }
 
-    private async Task RunDispatchLoopAsync(SimConnect simConnect, CancellationToken stoppingToken)
+    private void SetConnectionState(bool isConnected, string status)
     {
-        while (!stoppingToken.IsCancellationRequested)
-        {
-            ProcessMessages(simConnect);
-
-            lock (_connectionSync)
-            {
-                if (!ReferenceEquals(_simConnect, simConnect))
-                {
-                    return;
-                }
-            }
-
-            await Task.Delay(16, stoppingToken).ConfigureAwait(false);
-        }
-    }
-
-    private void DisconnectSimConnect()
-    {
-        SimConnect? simConnect;
+        var hasChanged = false;
 
         lock (_connectionSync)
         {
-            simConnect = _simConnect;
-            _simConnect = null;
+            if (IsConnected != isConnected || !string.Equals(ConnectionStatus, status, StringComparison.Ordinal))
+            {
+                IsConnected = isConnected;
+                ConnectionStatus = status;
+                hasChanged = true;
+            }
         }
 
+        if (hasChanged)
+        {
+            ConnectionStateChanged();
+        }
+    }
+
+    private SimConnect? DetachCurrentConnection()
+    {
+        lock (_connectionSync)
+        {
+            var simConnect = _simConnect;
+            _simConnect = null;
+            return simConnect;
+        }
+    }
+
+    private void CleanupFailedConnection(SimConnect? simConnect)
+    {
+        DisposeSimConnect(simConnect);
+    }
+
+    private void Disconnect(string status)
+    {
+        DisposeSimConnect(DetachCurrentConnection());
+        SetConnectionState(false, status);
+    }
+
+    private void DisposeSimConnect(SimConnect? simConnect)
+    {
         if (simConnect is null)
         {
             return;
@@ -219,10 +294,75 @@ public sealed class FenixSharedMemoryReader : BackgroundService, IAsyncDisposabl
             simConnect.OnRecvClientData -= OnRecvClientData;
             simConnect.OnRecvQuit -= OnRecvQuit;
         }
+        catch (Exception ex)
+        {
+            LogToFile($"Dispose unsubscribe error: {ex.Message}");
+        }
         finally
         {
-            simConnect.Dispose();
+            try
+            {
+                simConnect.Dispose();
+            }
+            catch (Exception ex)
+            {
+                LogToFile($"Dispose error: {ex.Message}");
+            }
         }
+    }
+
+    private unsafe void OnRecvClientData(SimConnect sender, SIMCONNECT_RECV_CLIENT_DATA data)
+    {
+        _ = sender;
+
+        try
+        {
+            if (data.dwRequestID != (uint)ClientDataRequest.Stream || data.dwData.Length == 0)
+            {
+                return;
+            }
+
+            if (data.dwData[0] is not SimConnectClientDataPayload payload)
+            {
+                return;
+            }
+
+            var bufferSize = FenixSharedMemoryLayout.BufferSize;
+            ReadOnlySpan<byte> payloadBytes = new(payload.Data, bufferSize);
+            var snapshot = MemoryMarshal.Read<FenixFpmSharedBuffer>(payloadBytes);
+
+            if (snapshot.Header.Version != FenixSharedMemoryLayout.Version ||
+                snapshot.Header.SizeBytes != (uint)bufferSize)
+            {
+                return;
+            }
+
+            if (snapshot.Checksum != ComputeChecksum(snapshot))
+            {
+                LogToFile("Checksum mismatch while receiving client data.");
+                return;
+            }
+
+            lock (_snapshotSync)
+            {
+                _latestSnapshot = snapshot;
+                _hasSnapshot = true;
+            }
+
+            _snapshotChannel.Writer.TryWrite(snapshot);
+        }
+        catch (Exception ex)
+        {
+            LogToFile($"OnRecvClientData Error: {ex}");
+        }
+    }
+
+    private void OnRecvQuit(SimConnect sender, SIMCONNECT_RECV data)
+    {
+        _ = sender;
+        _ = data;
+        LogToFile("Simulator closed the SimConnect session.");
+        Disconnect("MSFS closed the connection");
     }
 
     private void CompleteChannel()
@@ -241,63 +381,6 @@ public sealed class FenixSharedMemoryReader : BackgroundService, IAsyncDisposabl
             throw new InvalidOperationException(
                 $"FenixFpmSharedBuffer exceeds the registered SimConnect payload envelope ({MaxClientDataPayloadSize} bytes).");
         }
-    }
-
-    private static void ProcessMessages(SimConnect simConnect)
-    {
-        try
-        {
-            simConnect.ReceiveMessage();
-        }
-        catch (COMException ex) when (ex.ErrorCode == unchecked((int)0x80004005))
-        {
-        }
-    }
-
-    private unsafe void OnRecvClientData(SimConnect sender, SIMCONNECT_RECV_CLIENT_DATA data)
-    {
-        _ = sender;
-
-        if (data.dwRequestID != (uint)ClientDataRequest.Stream || data.dwData.Length == 0)
-        {
-            return;
-        }
-
-        if (data.dwData[0] is not SimConnectClientDataPayload payload)
-        {
-            return;
-        }
-
-        var bufferSize = FenixSharedMemoryLayout.BufferSize;
-        ReadOnlySpan<byte> payloadBytes = new(payload.Data, bufferSize);
-        var snapshot = MemoryMarshal.Read<FenixFpmSharedBuffer>(payloadBytes);
-
-        if (snapshot.Header.Version != FenixSharedMemoryLayout.Version ||
-            snapshot.Header.SizeBytes != (uint)bufferSize)
-        {
-            return;
-        }
-
-        if (snapshot.Checksum != ComputeChecksum(snapshot))
-        {
-            return;
-        }
-
-        lock (_snapshotSync)
-        {
-            _latestSnapshot = snapshot;
-            _hasSnapshot = true;
-        }
-
-        _snapshotChannel.Writer.TryWrite(snapshot);
-    }
-
-    private void OnRecvQuit(SimConnect sender, SIMCONNECT_RECV data)
-    {
-        _ = sender;
-        _ = data;
-        Trace.TraceWarning("[SimConnect] Simulator closed the client data session. Waiting to reconnect.");
-        DisconnectSimConnect();
     }
 
     private static uint ComputeChecksum(FenixFpmSharedBuffer snapshot)

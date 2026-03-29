@@ -1,0 +1,30 @@
+﻿{
+  "Stabilized_Approach_Gates": {
+    "IMC_1000ft_AAL": {
+      "Gate_Height_ft_AAL": 1000,
+      "Requirements": {
+        "Speed_Tolerance_kt": [
+          -5,
+          10
+        ],
+        "VS_Limit_fpm": -1000,
+        "Pitch_Min_deg": -2.5,
+        "Pitch_Max_deg": 10,
+        "Bank_Max_deg": 7
+      }
+    },
+    "VMC_500ft_AAL": {
+      "Gate_Height_ft_AAL": 500,
+      "Requirements": {
+        "Speed_Tolerance_kt": [
+          -5,
+          10
+        ],
+        "VS_Limit_fpm": -1000,
+        "Pitch_Min_deg": -2.5,
+        "Pitch_Max_deg": 10,
+        "Bank_Max_deg": 7
+      }
+    }
+  }
+}
